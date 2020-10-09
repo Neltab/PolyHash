@@ -6,7 +6,8 @@ et permet de soigner la _mise en forme_.
 
 ===========
 
-L'équipe : Groupe H
+Groupe H :
+
 Aurelien BOISSIERE 
 Gaetan BALEM
 Lucas MAHE
