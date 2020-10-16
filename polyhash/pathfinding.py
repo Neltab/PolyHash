@@ -1,24 +1,12 @@
-#Utilisé pour appeler les fonctions de pathfinding
+grille = []
+lines = 0
+columns = 0
+#Récupérer les coordonnées depuis le fichier de gaetan
 
-from polyhash.Node import Node
-from polyhash.Grid import Grid
+height,width = 4,5
 
-def FindPath(startPos, targetPos):
-    startNode: Node = pointsGrid[startPos[0]][startPos[1]] #On assigne 0 ou 1 à la valeur de startNode
-    targetNode: Node = pointsGrid[targetPos[0]][targetPos[1]]
+#génération de la grille remplie de zéros
+grille = [[0 for j in range (columns)] for i in range (lignes)]
 
-    openSet: Node =[]
-    closedSet: Node = []
-    openSet.append(startPos)
+print(grille)
 
-    while len(openSet) > 0 :
-        currentNode = openSet[0]
-        for i in range(1,len(openSet)):
-            if(openSet[i].fCost < currentNode.fCost or openSet[i].fCost == currentNode.fCost and openSet[i].hCost < currentNode.hCost):
-                currentNode = openSet[i]
-
-        openSet.remove(currentNode)
-        closedSet.append(currentNode)
-
-        if currentNode == targetNode : #on a trouvé le chemin YES
-            return
