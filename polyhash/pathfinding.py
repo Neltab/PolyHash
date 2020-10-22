@@ -1,29 +1,24 @@
-#Utilisé pour appeler les fonctions de pathfinding et pour établir la grille
+#Utilisé pour appeler les fonctions de pathfinding
 
-from polyhash import Node
+from polyhash.Node import Node
+from polyhash.Grid import Grid
 
-#points de montage à vérifier
-target = [0,0]
-#Lignes et colonnes de la grille
-lines,columns = 4,5
+def FindPath(startPos, targetPos):
+    startNode: Node = pointsGrid[startPos[0]][startPos[1]] #On assigne 0 ou 1 à la valeur de startNode
+    targetNode: Node = pointsGrid[targetPos[0]][targetPos[1]]
 
-#génération de la grille remplie de zéros
-grid = [[0 for j in range (columns)] for i in range (lines)]
-print(grid)
-points = [0,2,3,4]
+    openSet: Node =[]
+    closedSet: Node = []
+    openSet.append(startPos)
 
-def apply_points_to_grid(g, p):
-    numberOfPoints = len(p)/2
-    newGrid = g
-    n = 1
-    i = 0
-    while n <= numberOfPoints : #Pour chaque point, et a chaque boucle on incrémente de 2
-        newGrid[p[i]][p[i+1]] = 1
-        n+=1
-        i+=2
-    return newGrid
+    while len(openSet) > 0 :
+        currentNode = openSet[0]
+        for i in range(1,len(openSet)):
+            if(openSet[i].fCost < currentNode.fCost or openSet[i].fCost == currentNode.fCost and openSet[i].hCost < currentNode.hCost):
+                currentNode = openSet[i]
 
-collisionGrid = apply_points_to_grid(grid, points) #c'est la grille qui contient les positions de collisions
-print(collisionGrid)
+        openSet.remove(currentNode)
+        closedSet.append(currentNode)
 
-def FindPath(startOos, targetPos):
+        if currentNode == targetNode : #on a trouvé le chemin YES
+            return
