@@ -19,3 +19,4 @@ __version__ = "0.0.1"
 from .polyhsolver import solve
 from .polyhmodel import useless
 from .polyhutils import say_hello
+from .Node import Node
