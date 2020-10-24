@@ -122,8 +122,8 @@ if __name__ == "__main__":
     # test2[3] = 10
     # print(test)
 
-    nb_edges = 6
-    PM = [2,1]
+    nb_edges = 1000
+    PM = [5, 248, 136, 587, 927, 683, 620, 420, 69, 42]
     tab = [[random.randint(1, 100) for i in range(nb_edges)] for j in range(nb_edges)]
     # tab = [[-1, 68, 16, 49, 13, 7, 85, 25, 65, 13, 88, 66, 15, 79, 66],
     #         [25, -1, 90, 85, 95, 74, 18, 84, 43, 88, 31, 88, 14, 7, 80],
@@ -152,8 +152,8 @@ if __name__ == "__main__":
     for i in PM:
         edges.remove(i)
 
-    for i in tab:
-        print(i)
+    # for i in tab:
+    #     print(i)
     
     for i in range(nb_edges - len(PM)):
         current = i%len(PM)
@@ -162,4 +162,5 @@ if __name__ == "__main__":
         edges.remove(maxIndex)
 
     print("\n")
-    print(tasks)
+    # for i in tasks:
+    #     print(i)
