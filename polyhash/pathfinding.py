@@ -1,11 +1,11 @@
 #Utilisé pour appeler les fonctions de pathfinding
 
 from polyhash.Node import Node
-from polyhash.Grid import Grid
+from polyhash import settings as S
 
 def FindPath(startPos, targetPos):
-    startNode: Node = pointsGrid[startPos[0]][startPos[1]] #On assigne 0 ou 1 à la valeur de startNode
-    targetNode: Node = pointsGrid[targetPos[0]][targetPos[1]]
+    startNode: Node = S.grid[startPos[0]][startPos[1]] #On assigne 0 ou 1 à la valeur de startNode
+    targetNode: Node = S.grid[targetPos[0]][targetPos[1]]
 
     openSet: Node =[]
     closedSet: Node = []
