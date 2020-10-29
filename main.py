@@ -19,6 +19,5 @@ if __name__ == "__main__":
 
     pointsGrid = apply_points_to_grid(S.grid, points)  # c'est la grille qui contient les positions de collisions
     S.nodeGrid = GenerateNodeGrid(S.grid)
-    print(pointsGrid)
 
-    pathfinding.FindPath([0,2], [3,4])
+    pathfinding.FindPath([0,2], [1,3])

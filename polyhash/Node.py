@@ -4,8 +4,8 @@ class Node:
 
     gridX: int
     gridY: int
-    gCost: int
-    hCost: int
+    gCost: int = 0
+    hCost: int = 0
     parent: Node
     walkable: bool
 

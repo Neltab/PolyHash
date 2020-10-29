@@ -12,7 +12,17 @@ def FindPath(startPos: [], targetPos: []):
     closedSet = []
     openSet.append(startNode)
 
+    nodeGrid = S.nodeGrid
+    for x in range(0, S.lines):
+        for y in range(0, S.columns):
+            nodeGrid[x][y].gCost = GetDistance(nodeGrid[x][y], startNode)
+            nodeGrid[x][y].hCost = GetDistance(nodeGrid[x][y], targetNode)
+            #print(nodeGrid[x][y].gCost,nodeGrid[x][y].hCost) #print toutes les valeurs de gCost et hCost de la grille
+
+
     while len(openSet) > 0 :
+        for n in openSet:
+            print(n.gridX, n.gridY)
         currentNode: Node = openSet[0]
         for i in range(1,len(openSet)):
             if(openSet[i].fCost < currentNode.fCost or openSet[i].fCost == currentNode.fCost and openSet[i].hCost < currentNode.hCost):
@@ -21,7 +31,7 @@ def FindPath(startPos: [], targetPos: []):
         openSet.remove(currentNode)
         closedSet.append(currentNode)
 
-        if currentNode == targetNode : #on a trouvé le chemin YES
+        if currentNode.gridX == targetNode.gridX and  currentNode.gridY == targetNode.gridY: #on a trouvé le chemin YES
             RetracePath(startNode, targetNode)
             return
 
@@ -30,9 +40,9 @@ def FindPath(startPos: [], targetPos: []):
             if (not neighbour.walkable) or neighbour in closedSet:
                 continue
 
-            newMovementCostToNeighbour: int = currentNode.gCost + GetDistance(currentNode, neighbour)
-            if (newMovementCostToNeighbour < neighbour.gCost) or (not neighbour in openSet):
-                neighbour.gCost = newMovementCostToNeighbour
+            newCostToNeighbour : int = currentNode.gCost + GetDistance(currentNode, neighbour)
+            if (newCostToNeighbour < neighbour.gCost) or (not neighbour in openSet):
+                neighbour.gCost = newCostToNeighbour
                 neighbour.hCost = GetDistance(neighbour, targetNode)
                 neighbour.parent = currentNode
 
@@ -47,6 +57,7 @@ def GetDistance(nodeA: Node, nodeB: Node):
 
 
 def RetracePath(startNode, endNode):
+    print("retrace path : execution")
     path = []
     currentNode: Node = endNode #on part de la fin
 
