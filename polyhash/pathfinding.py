@@ -21,17 +21,18 @@ def FindPath(startPos: [], targetPos: []):
 
 
     while len(openSet) > 0 :
-        for n in openSet:
-            print(n.gridX, n.gridY)
+        #print(openSet)
         currentNode: Node = openSet[0]
         for i in range(1,len(openSet)):
-            if(openSet[i].fCost < currentNode.fCost or openSet[i].fCost == currentNode.fCost and openSet[i].hCost < currentNode.hCost):
-                currentNode = openSet[i]
+            if openSet[i].fCost() <= currentNode.fCost():
+                if openSet[i].hCost < currentNode.hCost:
+                    currentNode = openSet[i]
 
         openSet.remove(currentNode)
         closedSet.append(currentNode)
 
         if currentNode.gridX == targetNode.gridX and  currentNode.gridY == targetNode.gridY: #on a trouvé le chemin YES
+            print("on a réussi la en fait")
             RetracePath(startNode, targetNode)
             return
 
@@ -63,6 +64,7 @@ def RetracePath(startNode, endNode):
 
     while not currentNode == startNode :
         path.append(currentNode)
+        print("tour sans pb")
         currentNode = currentNode.parent
 
     path.reverse()

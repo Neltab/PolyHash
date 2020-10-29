@@ -26,18 +26,35 @@ def GenerateNodeGrid(grid):
 #returns all the neighbour nodes from a given node
 def GetNeighbours(node: Node):
     neighbours = []
-    for x in range(-1, 1):
-        for y in range(-1, 1):
-            if x == 0 and y == 0:
-                continue
-            if not (x*x + y*y) == 1: #on ne peut pas prendre de diagonales, avec cette condition on saute les diagonales
-                continue
-            checkX: int = node.gridX + x
-            checkY: int = node.gridY + y
 
-            if checkX >= 0 and checkX < S.lines and checkY >= 0 and checkY < S.columns :
-                neighbours.append(S.nodeGrid[checkX][checkY])
+    #exécuter ça 4 fois pour les 4 cases autour de la Node en question
+    #1st
+    checkX: int = node.gridX - 1
+    checkY: int = node.gridY
 
+    if checkX >= 0 and checkX < S.lines and checkY >= 0 and checkY < S.columns :
+        neighbours.append(S.nodeGrid[checkX][checkY])
+
+    # 2nd
+    checkX: int = node.gridX + 1
+    checkY: int = node.gridY
+
+    if checkX >= 0 and checkX < S.lines and checkY >= 0 and checkY < S.columns:
+        neighbours.append(S.nodeGrid[checkX][checkY])
+
+    #3rd
+    checkX: int = node.gridX
+    checkY: int = node.gridY - 1
+
+    if checkX >= 0 and checkX < S.lines and checkY >= 0 and checkY < S.columns:
+        neighbours.append(S.nodeGrid[checkX][checkY])
+
+    #4th
+    checkX: int = node.gridX
+    checkY: int = node.gridY + 1
+
+    if checkX >= 0 and checkX < S.lines and checkY >= 0 and checkY < S.columns:
+        neighbours.append(S.nodeGrid[checkX][checkY])
 
     return neighbours
 
