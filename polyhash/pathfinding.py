@@ -31,8 +31,8 @@ def FindPath(startPos: [], targetPos: []):
         openSet.remove(currentNode)
         closedSet.append(currentNode)
 
-        if currentNode.gridX == targetNode.gridX and  currentNode.gridY == targetNode.gridY: #on a trouvé le chemin YES
-            print("on a réussi la en fait")
+        if currentNode.gridX == targetNode.gridX and currentNode.gridY == targetNode.gridY: #on a trouvé le chemin YES
+            targetNode.parent = currentNode.parent
             RetracePath(startNode, targetNode)
             return
 
@@ -58,13 +58,11 @@ def GetDistance(nodeA: Node, nodeB: Node):
 
 
 def RetracePath(startNode, endNode):
-    print("retrace path : execution")
     path = []
     currentNode: Node = endNode #on part de la fin
 
     while not currentNode == startNode :
         path.append(currentNode)
-        print("tour sans pb")
         currentNode = currentNode.parent
 
     path.reverse()
