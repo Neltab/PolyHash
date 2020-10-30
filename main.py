@@ -14,10 +14,12 @@ if __name__ == "__main__":
 
     #génération de la grille remplie de zéros
     S.grid = [[0 for j in range (S.columns)] for i in range (S.lines)]
-    print(S.grid)
-    points = [0,2,3,4]
+    points = [2,3,3,3]
 
     pointsGrid = apply_points_to_grid(S.grid, points)  # c'est la grille qui contient les positions de collisions
-    S.nodeGrid = GenerateNodeGrid(S.grid)
+    S.nodeGrid = GenerateNodeGrid(pointsGrid)
 
-    pathfinding.FindPath([0,2], [1,3])
+    print(S.grid)
+    print(pointsGrid)
+
+    pathfinding.FindPath([0,2], [3,4])

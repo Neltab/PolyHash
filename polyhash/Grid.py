@@ -1,9 +1,10 @@
 from polyhash import Node
 from polyhash import settings as S
+import copy
 
 def apply_points_to_grid(g, p):  # retourne une grille ayant des 1 aux emplacements des points de montage et 0 sinon
     numberOfPoints = len(p) / 2
-    newGrid = g
+    newGrid = copy.deepcopy(g)
     n = 1
     i = 0
     while n <= numberOfPoints:  # Pour chaque point, et a chaque boucle on incrémente de 2
@@ -13,7 +14,7 @@ def apply_points_to_grid(g, p):  # retourne une grille ayant des 1 aux emplaceme
     return newGrid
 
 def GenerateNodeGrid(grid):
-    newGrid = grid #on la calque dessus pour etre sur d'avoir les bonnes dimensions
+    newGrid = copy.deepcopy(grid) #on la calque dessus pour etre sur d'avoir les bonnes dimensions
     for x in range(0, S.lines):
         for y in range(0, S.columns):
             if grid[x][y] == 0:
