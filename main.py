@@ -15,11 +15,14 @@ if __name__ == "__main__":
     #génération de la grille remplie de zéros
     S.grid = [[0 for j in range (S.columns)] for i in range (S.lines)]
     points = [0,0,2,0]
+    #Cibles a atteindre avecl'algorithme
+    targets = [3,0,3,1]
 
     pointsGrid = apply_points_to_grid(S.grid, points)  # c'est la grille qui contient les positions de collisions
     S.nodeGrid = GenerateNodeGrid(pointsGrid)
 
-    print(S.grid)
+    print("Grille : 0=vide et 1=point de montage")
     print(pointsGrid)
 
-    pathfinding.FindPath([0,0], [3,0])
+    #Donner un tableau de liste de points, et faire l'algorithme qui parcourt tous ces points
+    pathfinding.CompleteTask(targets, [0,0])

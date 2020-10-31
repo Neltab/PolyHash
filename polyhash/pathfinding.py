@@ -3,6 +3,7 @@
 from polyhash.Node import Node
 from polyhash.Grid import GetNeighbours
 from polyhash import settings as S
+import copy
 
 def FindPath(startPos: [], targetPos: []):
     startNode = Node(True,  startPos[0],  startPos[1])
@@ -12,13 +13,13 @@ def FindPath(startPos: [], targetPos: []):
     closedSet = []
     openSet.append(startNode)
 
-    nodeGrid = S.nodeGrid
+    #On initialise une grille de Nodes, et pour chaque node, on lui assigne les valeurs de gCost et hCost correspondantes
+    nodeGrid = copy.deepcopy(S.nodeGrid)
     for x in range(0, S.lines):
         for y in range(0, S.columns):
             nodeGrid[x][y].gCost = GetDistance(nodeGrid[x][y], startNode)
             nodeGrid[x][y].hCost = GetDistance(nodeGrid[x][y], targetNode)
             #print(nodeGrid[x][y].gCost,nodeGrid[x][y].hCost) #print toutes les valeurs de gCost et hCost de la grille
-
 
     while len(openSet) > 0 :
         #print(openSet)
@@ -71,6 +72,7 @@ def RetracePath(startNode, endNode):
     path.reverse()
     print(pathLetter)
 
+
 def GetDirection(n1: Node, n2: Node): #retourne la position de la node 2 par rapport à la 1
     if n1.gridX > n2.gridX: #2 a gauche de 1
         return "L"
@@ -80,3 +82,12 @@ def GetDirection(n1: Node, n2: Node): #retourne la position de la node 2 par rap
         return "D"
     if n1.gridY < n2.gridY:
         return "U"
+
+
+def CompleteTask(targets, startPoint):
+    for i in range(0, len(targets), 2):
+        if i == 0:
+            pass
+            FindPath(startPoint, [targets[i],targets[i+1]])
+        else:
+            FindPath([targets[i-2], targets[i - 1]], [targets[i],targets[i+1]])
