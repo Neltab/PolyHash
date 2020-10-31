@@ -73,7 +73,6 @@ class Taches:
 
 #Création de la boucle pour prendre les coordonnées des points d'assemblages des tables
 lcoordtask=[]
-result = []
 
 for p in range(NBTACHES - 1):
     lcoordtask = []
@@ -116,7 +115,6 @@ for p in range(NBTACHES - 1):
     rendement = pointstask/nbcase
     exec('Tache' + str(p) + '=' + 'Taches(nbcase, nbptassemblagetask, rendement, moment)')
     lcoordtask.append(moment)
-    result.append(Taches(nbcase, nbptassemblagetask, rendement, moment))
 
 #dernière ligne du fichier texte n'a pas de '/n' on la traite donc apart
 lcoordtask = []
@@ -142,9 +140,6 @@ else:
 nbcase = Calculdistance(ltempo)
 rendement = pointstask/nbcase
 exec('Tache'+str(NBTACHES-1) + '=' + 'Taches(nbcase, nbptassemblagetask, rendement, ltempo)')
-result.append(Taches(nbcase, nbptassemblagetask, rendement, ltempo))
-print(result)
-print(LPTDEMONT)
 
 
 fichier.close()
