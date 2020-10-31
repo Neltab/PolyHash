@@ -59,11 +59,24 @@ def GetDistance(nodeA: Node, nodeB: Node):
 
 def RetracePath(startNode, endNode):
     path = []
+    pathLetter = []
     currentNode: Node = endNode #on part de la fin
 
     while not currentNode == startNode :
         path.append(currentNode)
+        pathLetter.append(GetDirection(currentNode.parent, currentNode))
         currentNode = currentNode.parent
 
+    pathLetter.reverse()
     path.reverse()
-    print(path)
+    print(pathLetter)
+
+def GetDirection(n1: Node, n2: Node): #retourne la position de la node 2 par rapport à la 1
+    if n1.gridX > n2.gridX: #2 a gauche de 1
+        return "L"
+    if n1.gridX < n2.gridX:
+        return "R"
+    if n1.gridY > n2.gridY: #2 au dessous de 1
+        return "D"
+    if n1.gridY < n2.gridY:
+        return "U"
