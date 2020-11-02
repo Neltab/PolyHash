@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from polyhash.Node import Node
-from polyhash.Grid import apply_points_to_grid
-from polyhash.Grid import GenerateNodeGrid
-from polyhash import settings as S
-from polyhash import pathfinding
+from polyhash.Pathfinding.Grid import apply_points_to_grid
+from polyhash.Pathfinding.Grid import GenerateNodeGrid
+from polyhash.Pathfinding import settings as S, pathfinding
 
 if __name__ == "__main__":
 
@@ -25,4 +23,4 @@ if __name__ == "__main__":
     print(pointsGrid)
 
     #Donner un tableau de liste de points, et faire l'algorithme qui parcourt tous ces points
-    pathfinding.CompleteTask(targets, [0,0])
+    pathfinding.CompleteTask(targets, [0, 0])

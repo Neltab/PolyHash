@@ -1,8 +1,8 @@
 #Utilisé pour appeler les fonctions de pathfinding
 
-from polyhash.Node import Node
-from polyhash.Grid import GetNeighbours
-from polyhash import settings as S
+from polyhash.Pathfinding.Node import Node
+from polyhash.Pathfinding.Grid import GetNeighbours
+from polyhash.Pathfinding import settings as S
 import copy
 
 def FindPath(startPos: [], targetPos: []):

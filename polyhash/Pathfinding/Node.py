@@ -1,12 +1,10 @@
-from polyhash import Node
-
 class Node:
 
     gridX: int
     gridY: int
     gCost: int = 0
     hCost: int = 0
-    parent: Node
+    parent = 0
     walkable: bool
 
     def __init__(self, walkable, gridX, gridY):

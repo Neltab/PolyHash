@@ -1,5 +1,5 @@
 from polyhash import Node
-from polyhash import settings as S
+from polyhash.Pathfinding import settings as S
 import copy
 
 def apply_points_to_grid(g, p):  # retourne une grille ayant des 1 aux emplacements des points de montage et 0 sinon
