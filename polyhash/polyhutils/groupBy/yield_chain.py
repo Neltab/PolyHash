@@ -1,4 +1,7 @@
 from dataclasses import dataclass
+from Arm import Arm
+
+# ! Import la classe Tache plus proprement
 
 @dataclass
 class Taches:
@@ -7,65 +10,6 @@ class Taches:
     #rendement = points/distance (distance en nombre de cases au sein de la tache si nbcase = 1 rendement = nbpoint)
     rendement : int
     coordtask : int
-
-class Arm:
-    def __init__(self):
-        self.pm = 0
-        self.taches = []
-        self.points = 0
-        self.etapes = 0
-
-    def set_pm(self, pm):
-        if not self.represent_int(pm):
-            return
-        pm = int(pm)
-
-        if pm < 0:
-            return
-
-        self.pm = pm
-
-    def add_task(self, task):
-        if not self.represent_int(task):
-            return
-        task = int(task)
-
-        if task < 0:
-            return
-
-        self.taches.append(task)
-
-    def add_points(self, points):
-        if not self.represent_int(points):
-                return
-        points = int(points)
-
-        if points < 0:
-            return
-
-        self.points += points
-
-    def add_steps(self, steps):
-        if not self.represent_int(steps):
-                return
-        steps = int(steps)
-
-        if steps < 0:
-            return
-
-        self.etapes += steps
-
-    def represent_int(self, n):
-        try:
-            int(n)
-            return True
-        except ValueError:
-            return False
-
-    def __str__(self):
-        #TODO: refaire la valeur de sortie
-        return "[Point de montage: {0}, Taches: {1}, Points: {2}, Etapes: {3}]".format(self.pm, self.taches, self.points, self.etapes)
-
 
 # Fonction principale du fichier
 # Renvoie un tableau contenant les bras à placer
@@ -180,7 +124,7 @@ if __name__ == "__main__":
     grille = [["" for i in range(100)] for j in range(100)]
 
     for b in bras:
-        # print(b)
+        print(b)
     #     i = 0
     #     grille[pmb[b.pm][0]][pmb[b.pm][1]] = "PM"
     #     for t in b.taches:
