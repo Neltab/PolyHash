@@ -1,4 +1,4 @@
-from polyhash import Node
+from polyhash.Pathfinding import Node
 from polyhash.Pathfinding import settings as S
 import copy
 
