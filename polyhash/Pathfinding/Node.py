@@ -1,10 +1,12 @@
+from __future__ import annotations
+
 class Node:
 
     gridX: int
     gridY: int
     gCost: int = 0
     hCost: int = 0
-    parent = 0
+    parent: Node
     walkable: bool
 
     def __init__(self, walkable, gridX, gridY):
