@@ -11,6 +11,8 @@ class Taches:
     rendement : int
     coordtask : int
 
+__all__ = ['get_arms']
+
 # Fonction principale du fichier
 # Renvoie un tableau contenant les bras à placer
 # * taches: list<Tache> = Liste contenant toutes les taches à effectuer
