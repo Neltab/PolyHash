@@ -70,7 +70,6 @@ def RetracePath(startNode, endNode):
 
     pathLetter.reverse()
     path.reverse()
-    print(pathLetter)
     return pathLetter #retourne un tableau de lettres
 
 
@@ -92,4 +91,5 @@ def CompleteArmTask(arm : Arm): #targets est une liste de Taches (objet). Il fau
 
     for i in range(0, len(targets)):
         targetPos = targets[i]
-        FindPath(startPoint, targetPos) #retourner cette valeur dans la nouvelle variable de arm
+        arm.movements.append(FindPath(startPoint, targetPos))
+        startPoint = targetPos
