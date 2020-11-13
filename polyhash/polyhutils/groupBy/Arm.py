@@ -4,6 +4,7 @@ class Arm:
         self.taches = []
         self.points = 0
         self.etapes = 0
+        self.movements: list
 
     def set_pm(self, pm):
         if not self.represent_int(pm):
