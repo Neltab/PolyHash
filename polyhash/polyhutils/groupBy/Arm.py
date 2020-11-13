@@ -2,6 +2,7 @@ class Arm:
     def __init__(self):
         self.pm = 0
         self.taches = []
+        self.tachesIndices = []
         self.points = 0
         self.etapes = 0
 
@@ -15,14 +16,15 @@ class Arm:
 
         self.pm = pm
 
-    def add_task(self, task):
-        if not self.represent_int(task):
+    def add_task(self, task, indice):
+        if not self.represent_int(indice):
             return
-        task = int(task)
+        indice = int(indice)
 
-        if task < 0:
+        if indice < 0:
             return
 
+        self.tachesIndices.append(indice)
         self.taches.append(task)
 
     def add_points(self, points):
