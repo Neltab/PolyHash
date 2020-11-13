@@ -57,18 +57,16 @@ def calc_dist(x: list, y: list) -> int:
 # * j : int = indice de la tache d'arrivée
 # * return: float = rendement 
 def get_yield(taches, i, j):
-    #TODO: remplacer rendement par la variable donnant le nombre de points de la tache
     # ! A voir si ajouter la distance de la tache est vraiment intéressant
     dist = calc_dist(taches[i].coordtask[-1], taches[j].coordtask[0]) + (taches[j].nbcase if taches[j].nbassemb==1 else 0)
     if dist == 0:
         return float('inf')
-    return taches[j].nbpoint / dist
+    return taches[j].nbpoint / (dist)
 
 # Calcule le rendement en fonction de la distance entre un point de montage et d'une tache (+ la distance intrinsèque de la tache)
 # * taches : tache = Tache à ordonner
 # * pointsMontages: list<int> = Liste des coordonnées du point de montage traité
 def get_pm_yield(tache, pointMontage):
-    #TODO: remplacer rendement par la variable donnant le nombre de points de la tache
     # ! A voir si ajouter la distance de la tache est vraiment intéressant
     return tache.nbpoint / (calc_dist(pointMontage, tache.coordtask[0]) + (tache.nbcase if tache.nbassemb==1 else 0))
 
