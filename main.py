@@ -16,8 +16,8 @@ if __name__ == "__main__":
     #####################
 
     bras = groupBy.rendement(LTASK, LPOINTDEMONT, BRAS)
-    # for b in bras:
-    #     print(b)
+    for b in bras:
+        print(b)
 
 
     ####################
