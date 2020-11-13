@@ -28,20 +28,20 @@ def get_arms(taches: list, pointsMontage: list, nbBras: int) -> list:
         indicePM, indiceTache = get_max_index_pm(pmYieldMatrix) # On récupère l'indice du point de montage et de la tache qui offrent le meilleur rendement
         remainingEdges.remove(indiceTache) # On enlève cette tache de la liste des taches à traiter
         # Ajout des différentes valeurs définissant le bras
-        bras[i].set_pm(indicePM)
+        bras[i].set_pm(pointsMontage[indicePM], indicePM)
         bras[i].add_task(taches[indiceTache], indiceTache)
         bras[i].add_points(taches[indiceTache].nbpoint)
         bras[i].add_steps(taches[indiceTache].nbcase if taches[indiceTache].nbassemb > 1 else 0)
-        bras[i].add_steps(calc_dist(pointsMontage[indicePM], taches[bras[i].taches[0]].coordtask[0]))
+        bras[i].add_steps(calc_dist(pointsMontage[indicePM], taches[bras[i].tachesIndices[0]].coordtask[0]))
 
     for i in range(nbEdges - nbBras): # Equivalent à while remaining edges != []
         current = i % nbBras #On récupère l'indice du bras que l'on est entrain de traiter
-        maxIndex = get_max_index(yieldMatrix[bras[current].taches[-1]], remainingEdges) # On cherche le meilleur rendement à partir de la dernière tache
+        maxIndex = get_max_index(yieldMatrix[bras[current].tachesIndices[-1]], remainingEdges) # On cherche le meilleur rendement à partir de la dernière tache
         # On ajoute les différentes valeurs liées à la tache trouvée à notre bras
         bras[current].add_task(taches[maxIndex], maxIndex)
         bras[current].add_points(taches[maxIndex].nbcase if taches[maxIndex].nbassemb > 1 else 0) #TODO: remplacer rendement par la variable donnant la longueur de la tache
         bras[current].add_points(taches[maxIndex].nbpoint)
-        bras[current].add_steps(calc_dist(taches[bras[current].taches[-2]].coordtask[-1], taches[bras[current].taches[-1]].coordtask[0]))
+        bras[current].add_steps(calc_dist(taches[bras[current].tachesIndices[-2]].coordtask[-1], taches[bras[current].tachesIndices[-1]].coordtask[0]))
         remainingEdges.remove(maxIndex) # On enlève cette tache de la liste des taches à traiter
 
     return bras
