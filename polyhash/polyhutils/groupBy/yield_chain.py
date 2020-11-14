@@ -60,7 +60,7 @@ def calc_dist(x: list, y: list) -> int:
 # * return: float = rendement 
 def get_yield(taches, i, j):
     # ! A voir si ajouter la distance de la tache est vraiment intéressant
-    dist = calc_dist(taches[i].coordtask[-1], taches[j].coordtask[0]) + (taches[j].nbcase if taches[j].nbassemb==1 else 0)
+    dist = calc_dist(taches[i].coordtask[0], taches[j].coordtask[0]) + (taches[j].nbcase if taches[j].nbassemb==1 else 0)
     if dist == 0:
         return float('inf')
     return taches[j].nbpoint / (dist)
