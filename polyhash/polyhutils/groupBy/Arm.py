@@ -6,7 +6,7 @@ class Arm:
         self.tachesIndices = []
         self.points = 0
         self.etapes = 0
-        self.movements = []
+        self.movements: list
 
     def set_pm(self, pm, indice):
         if not self.represent_int(indice):

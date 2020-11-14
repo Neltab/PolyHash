@@ -13,7 +13,7 @@ def apply_points_to_grid(g, p):  # retourne une grille ayant des 1 aux emplaceme
         i += 2
     return newGrid
 
-def GenerateNodeGrid(grid):
+def GenerateNodeGrid(grid): #on créé une grille remplie de nodes, de la même taille que la grid.
     newGrid = copy.deepcopy(grid) #on la calque dessus pour etre sur d'avoir les bonnes dimensions
     for x in range(0, S.lines):
         for y in range(0, S.columns):
