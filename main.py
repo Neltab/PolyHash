@@ -9,6 +9,8 @@ from polyhash.Pathfinding import settings as S, pathfinding
 
 from polyhash import groupBy
 
+from output import CreateFile
+
 if __name__ == "__main__":
     #####################
     # Partie d'Aurélien #
@@ -90,3 +92,9 @@ if __name__ == "__main__":
 
     #Donner un tableau de liste de points, et faire l'algorithme qui parcourt tous ces points
     pathfinding.CompleteTask(targets, [0, 0])
+
+    ####################
+    # Partie de Lucas  #
+    ####################
+
+    CreateFile()

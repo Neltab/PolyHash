@@ -1,7 +1,8 @@
 #Création d'un fichier à soumettre
-#def CreateFile(nbBras: int, ):
+def CreateFile():
+    with open("output.txt", "w") as fichier:
+        fichier.write("Bonjour monde")
 
-fichier = open("output.txt", "w")
 
 
-fichier.close()
+
