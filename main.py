@@ -17,8 +17,8 @@ if __name__ == "__main__":
     #####################
 
     bras = groupBy.rendement(LTASK, LPOINTDEMONT, BRAS)
-    for b in bras:
-        print(b.taches)
+    #for b in bras:
+    #    print(b.taches)
 
 
     # $ Interface :
@@ -97,4 +97,5 @@ if __name__ == "__main__":
     # Partie de Lucas  #
     ####################
 
-    CreateFile()
+    CreateFile(bras)
+    #print(str(bras[52].movements))
