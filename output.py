@@ -9,8 +9,8 @@ def CreateFile(bras: list):
             for y in range(len(i.tachesIndices)):
                 fichier.write(str(i.tachesIndices[y])+" ")
             fichier.write("\n")
-            for y in range(len(i.movements)):
-                fichier.write(i.movements[y]+" ")
+            for j in range(len(i.movements)):
+                fichier.write(i.movements[j]+" ")
             fichier.write("\n")
 
             

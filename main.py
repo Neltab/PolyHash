@@ -99,3 +99,8 @@ if __name__ == "__main__":
     #Donner à la fonction un Bras (Arm) et la fonction va modifier les parametres du bras en question pour lui donner la liste des mouvements
     pathfinding.CompleteArmTask(arm)
     print(arm.movements)
+    ####################
+    # Partie de Lucas #
+    ####################
+    
+    CreateFile(bras)
