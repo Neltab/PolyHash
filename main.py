@@ -85,7 +85,7 @@ if __name__ == "__main__":
     points = [0,0,2,0]
     #Cibles a atteindre avecl'algorithme
     arm = Arm
-    arm.taches = [[3,1],[3,0]]
+    arm.taches = [[3,1],[3,0],[2,1]]
     arm.pm = [0,0]
 
     pointsGrid = apply_points_to_grid(S.grid, points)  # c'est la grille qui contient les positions de collisions
@@ -96,3 +96,4 @@ if __name__ == "__main__":
 
     #Donner à la fonction un Bras (Arm) et la fonction va modifier les parametres du bras en question pour lui donner la liste des mouvements
     pathfinding.CompleteArmTask(arm)
+    print(arm.movements)
