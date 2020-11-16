@@ -44,6 +44,8 @@ def get_arms(taches: list, pointsMontage: list, nbBras: int) -> list:
         bras[current].add_steps(calc_dist(taches[bras[current].tachesIndices[-2]].coordtask[-1], taches[bras[current].tachesIndices[-1]].coordtask[0]))
         remainingEdges.remove(maxIndex) # On enlève cette tache de la liste des taches à traiter
 
+    # TODO décommenter cette fonction pour optimiser à nouveau le trajet
+    # twoOpt(bras)
     return bras
 
 # Calcule la distance de Manhattan entre deux points
@@ -60,7 +62,8 @@ def calc_dist(x: list, y: list) -> int:
 # * return: float = rendement 
 def get_yield(taches, i, j):
     # ! A voir si ajouter la distance de la tache est vraiment intéressant
-    dist = calc_dist(taches[i].coordtask[0], taches[j].coordtask[0]) + (taches[j].nbcase if taches[j].nbassemb==1 else 0)
+    # TODO Remplacer taches[i].coordtask[-1] par taches[i].coordtask[0] (optimisation du trajet avec le futur programme)
+    dist = calc_dist(taches[i].coordtask[-1], taches[j].coordtask[0]) + (taches[j].nbcase if taches[j].nbassemb==1 else 0)
     if dist == 0:
         return float('inf')
     return taches[j].nbpoint / (dist)
@@ -103,6 +106,24 @@ def get_max_index_pm(matrix):
         matrix[i][maxJ] = -1
 
     return maxI, maxJ
+
+def twoOpt(bras):
+    for b in bras:
+        size = len(b.taches)
+        improved = True
+
+        while improved:
+            improved = False
+            for i in range(size-3):
+                for j in range(i+2,size-1):
+                    gain = calc_dist(b.taches[i].coordtask[0], b.taches[j].coordtask[0]) + calc_dist(b.taches[i+1].coordtask[0], b.taches[j+1].coordtask[0]) - calc_dist(b.taches[i].coordtask[0], b.taches[i+1].coordtask[0]) - calc_dist(b.taches[j].coordtask[0], b.taches[j+1].coordtask[0])
+                    if gain < 0:
+                        b.taches[i+1], b.taches[j] = b.taches[j], b.taches[i+1]
+                        improved = True
+                        break
+
+def optimize(bras):
+    twoOpt(bras)
 
 
 if __name__ == "__main__":

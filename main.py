@@ -17,8 +17,8 @@ if __name__ == "__main__":
     #####################
 
     bras = groupBy.rendement(LTASK, LPOINTDEMONT, BRAS)
-    for b in bras:
-        print(b.taches)
+    # for b in bras:
+    #     print(b.taches[0].coordtask[0], b.taches[1].coordtask[0], b.taches[2].coordtask[0])
 
 
     # $ Interface :
@@ -44,8 +44,8 @@ if __name__ == "__main__":
     # taille_case = 5
     # color = ["blue","red"]
 
-    # for pm in LPOINTDEMONT:
-    #     canvas.create_rectangle(pm[0]*taille_case, 1000-pm[1]*taille_case, (pm[0]*taille_case+taille_case), 1000-(pm[1]*taille_case+taille_case), fill="blue", outline='')
+    # # for pm in LPOINTDEMONT:
+    # #     canvas.create_rectangle(pm[0]*taille_case, 1000-pm[1]*taille_case, (pm[0]*taille_case+taille_case), 1000-(pm[1]*taille_case+taille_case), fill="blue", outline='')
 
     # for t in LTASK:
     #     for coord in t.coordtask:
@@ -53,9 +53,9 @@ if __name__ == "__main__":
 
     # i = 0
     # for b in bras:
-    #     canvas.create_rectangle(LPOINTDEMONT[b.pm][0]*taille_case, 1000-LPOINTDEMONT[b.pm][1]*taille_case, LPOINTDEMONT[b.pm][0]*taille_case+taille_case, 1000-(LPOINTDEMONT[b.pm][1]*taille_case+taille_case), fill=COLORS[i], outline='black')
+    #     canvas.create_rectangle(b.pm[0]*taille_case, 1000-b.pm[1]*taille_case, b.pm[0]*taille_case+taille_case, 1000-(b.pm[1]*taille_case+taille_case), fill=COLORS[i], outline='black')
     #     for task in b.taches:
-    #         for coord in LTASK[task].coordtask:
+    #         for coord in task.coordtask:
     #             canvas.create_rectangle(coord[0]*taille_case, 1000-coord[1]*taille_case, (coord[0]*taille_case + taille_case), 1000-(coord[1]*taille_case + taille_case), fill = COLORS[i], outline='')
     #     i += 3
 
@@ -70,6 +70,7 @@ if __name__ == "__main__":
     #         i+=1
     #         canvas.after(1000,draw_next)
     # draw_next()
+
     # tk.mainloop()
 
     ####################
