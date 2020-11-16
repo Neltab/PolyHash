@@ -1,28 +1,35 @@
 class Arm:
+    movements = []
     def __init__(self):
-        self.pm = 0
+        self.pm = []
+        self.pmIndice = 0
         self.taches = []
+        self.tachesIndices = []
         self.points = 0
         self.etapes = 0
 
-    def set_pm(self, pm):
-        if not self.represent_int(pm):
-            return
-        pm = int(pm)
+        self.movements = []
 
-        if pm < 0:
+    def set_pm(self, pm, indice):
+        if not self.represent_int(indice):
+            return
+        indice = int(indice)
+
+        if indice < 0:
             return
 
+        self.pmIndice = indice
         self.pm = pm
 
-    def add_task(self, task):
-        if not self.represent_int(task):
+    def add_task(self, task, indice):
+        if not self.represent_int(indice):
             return
-        task = int(task)
+        indice = int(indice)
 
-        if task < 0:
+        if indice < 0:
             return
 
+        self.tachesIndices.append(indice)
         self.taches.append(task)
 
     def add_points(self, points):
@@ -55,4 +62,3 @@ class Arm:
     def __str__(self):
         #TODO: refaire la valeur de sortie
         return "[Point de montage: {0}, Taches: {1}, Points: {2}, Etapes: {3}]".format(self.pm, self.taches, self.points, self.etapes)
-
