@@ -1,4 +1,5 @@
 class Arm:
+    movements = []
     def __init__(self):
         self.pm = []
         self.pmIndice = 0
@@ -6,7 +7,7 @@ class Arm:
         self.tachesIndices = []
         self.points = 0
         self.etapes = 0
-        self.movements = []
+        self.movements: 0
 
     def set_pm(self, pm, indice):
         if not self.represent_int(indice):
@@ -60,4 +61,3 @@ class Arm:
     def __str__(self):
         #TODO: refaire la valeur de sortie
         return "[Point de montage: {0}, Taches: {1}, Points: {2}, Etapes: {3}]".format(self.pm, self.taches, self.points, self.etapes)
-

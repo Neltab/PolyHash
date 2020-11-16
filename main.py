@@ -6,19 +6,21 @@ from Input2 import GRILLE, BRAS, NBPTDEMONT, NBTACHES, NBETAPES, LPOINTDEMONT, L
 from polyhash.Pathfinding.Grid import apply_points_to_grid
 from polyhash.Pathfinding.Grid import GenerateNodeGrid
 from polyhash.Pathfinding import settings as S, pathfinding
+from polyhash.polyhutils.groupBy.Arm import Arm
 
 from polyhash import groupBy
 
 from output import CreateFile
 
 if __name__ == "__main__":
+
     #####################
     # Partie d'Aurélien #
     #####################
 
     bras = groupBy.rendement(LTASK, LPOINTDEMONT, BRAS)
-    #for b in bras:
-    #    print(b.taches)
+    # for b in bras:
+    #     print(b.taches[0].coordtask[0], b.taches[1].coordtask[0], b.taches[2].coordtask[0])
 
 
     # $ Interface :
@@ -43,8 +45,9 @@ if __name__ == "__main__":
 
     # taille_case = 5
     # color = ["blue","red"]
-    # for pm in LPOINTDEMONT:
-    #     canvas.create_rectangle(pm[0]*taille_case, 1000-pm[1]*taille_case, (pm[0]*taille_case+taille_case), 1000-(pm[1]*taille_case+taille_case), fill="blue", outline='')
+
+    # # for pm in LPOINTDEMONT:
+    # #     canvas.create_rectangle(pm[0]*taille_case, 1000-pm[1]*taille_case, (pm[0]*taille_case+taille_case), 1000-(pm[1]*taille_case+taille_case), fill="blue", outline='')
 
     # for t in LTASK:
     #     for coord in t.coordtask:
@@ -52,23 +55,24 @@ if __name__ == "__main__":
 
     # i = 0
     # for b in bras:
-    #     canvas.create_rectangle(LPOINTDEMONT[b.pm][0]*taille_case, 1000-LPOINTDEMONT[b.pm][1]*taille_case, LPOINTDEMONT[b.pm][0]*taille_case+taille_case, 1000-(LPOINTDEMONT[b.pm][1]*taille_case+taille_case), fill=COLORS[i], outline='black')
+    #     canvas.create_rectangle(b.pm[0]*taille_case, 1000-b.pm[1]*taille_case, b.pm[0]*taille_case+taille_case, 1000-(b.pm[1]*taille_case+taille_case), fill=COLORS[i], outline='black')
     #     for task in b.taches:
-    #         for coord in LTASK[task].coordtask:
+    #         for coord in task.coordtask:
     #             canvas.create_rectangle(coord[0]*taille_case, 1000-coord[1]*taille_case, (coord[0]*taille_case + taille_case), 1000-(coord[1]*taille_case + taille_case), fill = COLORS[i], outline='')
     #     i += 3
 
     # b = bras[3]
-    # canvas.create_rectangle(LPOINTDEMONT[b.pm][0]*taille_case, 1000-LPOINTDEMONT[b.pm][1]*taille_case, LPOINTDEMONT[b.pm][0]*taille_case+taille_case, 1000-(LPOINTDEMONT[b.pm][1]*taille_case+taille_case), fill="blue")
+    # canvas.create_rectangle(b.pm[0]*taille_case, 1000-b.pm[1]*taille_case, b.pm[0]*taille_case+taille_case, 1000-(b.pm[1]*taille_case+taille_case), fill="blue")
     # i=0
     # def draw_next():
     #     global i
     #     if i < len(b.taches):
-    #         for coord in LTASK[b.taches[i]].coordtask:
+    #         for coord in b.taches[i].coordtask:
     #             canvas.create_rectangle(coord[0]*taille_case, 1000-coord[1]*taille_case, (coord[0]*taille_case + taille_case), 1000-(coord[1]*taille_case + taille_case), fill='red', outline='')
     #         i+=1
     #         canvas.after(1000,draw_next)
     # draw_next()
+
     # tk.mainloop()
 
     ####################
@@ -82,7 +86,9 @@ if __name__ == "__main__":
     S.grid = [[0 for j in range (S.columns)] for i in range (S.lines)]
     points = [0,0,2,0]
     #Cibles a atteindre avecl'algorithme
-    targets = [3,0,3,1]
+    arm = Arm
+    arm.taches = [[3,1],[3,0],[2,1]]
+    arm.pm = [0,0]
 
     pointsGrid = apply_points_to_grid(S.grid, points)  # c'est la grille qui contient les positions de collisions
     S.nodeGrid = GenerateNodeGrid(pointsGrid)
@@ -90,12 +96,6 @@ if __name__ == "__main__":
     # print("Grille : 0=vide et 1=point de montage")
     # print(pointsGrid)
 
-    #Donner un tableau de liste de points, et faire l'algorithme qui parcourt tous ces points
-    pathfinding.CompleteTask(targets, [0, 0])
-
-    ####################
-    # Partie de Lucas  #
-    ####################
-
-    CreateFile(bras)
-    #print(str(bras[52].movements))
+    #Donner à la fonction un Bras (Arm) et la fonction va modifier les parametres du bras en question pour lui donner la liste des mouvements
+    pathfinding.CompleteArmTask(arm)
+    print(arm.movements)

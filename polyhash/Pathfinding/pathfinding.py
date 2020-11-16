@@ -3,6 +3,7 @@
 from polyhash.Pathfinding.Node import Node
 from polyhash.Pathfinding.Grid import GetNeighbours
 from polyhash.Pathfinding import settings as S
+from polyhash.polyhutils.groupBy.Arm import Arm
 import copy
 
 def FindPath(startPos: [], targetPos: []):
@@ -34,8 +35,7 @@ def FindPath(startPos: [], targetPos: []):
 
         if currentNode.gridX == targetNode.gridX and currentNode.gridY == targetNode.gridY: #on a trouvé le chemin YES
             targetNode.parent = currentNode.parent
-            RetracePath(startNode, targetNode)
-            return
+            return RetracePath(startNode, targetNode)
 
         #GetNeighbours retourne un tableau que l'on parcourt ici
         for neighbour in GetNeighbours(currentNode):
@@ -70,7 +70,7 @@ def RetracePath(startNode, endNode):
 
     pathLetter.reverse()
     path.reverse()
-    print(pathLetter)
+    return pathLetter #retourne un tableau de lettres
 
 
 def GetDirection(n1: Node, n2: Node): #retourne la position de la node 2 par rapport à la 1
@@ -84,10 +84,16 @@ def GetDirection(n1: Node, n2: Node): #retourne la position de la node 2 par rap
         return "U"
 
 
-def CompleteTask(targets, startPoint):
-    for i in range(0, len(targets), 2):
-        if i == 0:
-            pass
-            FindPath(startPoint, [targets[i],targets[i+1]])
-        else:
-            FindPath([targets[i-2], targets[i - 1]], [targets[i],targets[i+1]])
+def CompleteArmTask(arm : Arm): #targets est une liste de Taches (objet). Il faut donc récupérer les coordonnées de chacune des tâches
+
+    startPoint = arm.pm #le point de départ de l'algo, au début c'est le point de montage, mais il change après chaque path complété comme le bras ne repart pas du pm
+    targets = arm.taches #au format [[x1, y1],[x2,y2]...]
+
+    for i in range(0, len(targets)): #pour chaque target
+        targetPos = targets[i] #position à aller chercher
+        pathLetters = FindPath(startPoint, targetPos)
+
+        for i in pathLetters: # on additionne les lettres (mouvements) une a une au tableau contenant tous les mouvements du bras
+            arm.movements.append(i)
+
+        startPoint = targetPos # on change le point de départ comme expliqué plus haut
