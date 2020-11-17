@@ -89,11 +89,12 @@ def CompleteArmTask(arm : Arm): #targets est une liste de Taches (objet). Il fau
     startPoint = arm.pm #le point de départ de l'algo, au début c'est le point de montage, mais il change après chaque path complété comme le bras ne repart pas du pm
     targets = arm.taches #au format [[x1, y1],[x2,y2]...]
 
-    for i in range(0, len(targets)): #pour chaque target
-        targetPos = targets[i] #position à aller chercher
-        pathLetters = FindPath(startPoint, targetPos)
+    for i in range(0, len(targets)): #pour chaque tache
+        for j in range(0, len(targets[i].coordtask)):
+            targetPos = targets[i].coordtask[j] #position à aller chercher
+            pathLetters = FindPath(startPoint, targetPos)
 
-        for i in pathLetters: # on additionne les lettres (mouvements) une a une au tableau contenant tous les mouvements du bras
-            arm.movements.append(i)
+            for n in pathLetters: # on additionne les lettres (mouvements) une a une au tableau contenant tous les mouvements du bras
+                arm.movements.append(n)
 
         startPoint = targetPos # on change le point de départ comme expliqué plus haut
