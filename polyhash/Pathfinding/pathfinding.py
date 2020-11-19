@@ -10,6 +10,10 @@ def FindPath(startPos: [], targetPos: []):
     startNode = Node(True,  startPos[0],  startPos[1])
     targetNode = Node(True, targetPos[0], targetPos[1])
 
+    #exception si on ne doit pas bouger de case
+    if startPos == targetPos:
+        return None
+
     openSet = []
     closedSet = []
     openSet.append(startNode)
@@ -87,14 +91,17 @@ def GetDirection(n1: Node, n2: Node): #retourne la position de la node 2 par rap
 def CompleteArmTask(arm : Arm): #targets est une liste de Taches (objet). Il faut donc récupérer les coordonnées de chacune des tâches
 
     startPoint = arm.pm #le point de départ de l'algo, au début c'est le point de montage, mais il change après chaque path complété comme le bras ne repart pas du pm
+    print(startPoint)
     targets = arm.taches #au format [[x1, y1],[x2,y2]...]
 
-    for i in range(0, len(targets)): #pour chaque tache
-        for j in range(0, len(targets[i].coordtask)):
-            targetPos = targets[i].coordtask[j] #position à aller chercher
+    for tache in arm.taches: #pour chaque tache
+        for coord in tache.coordtask:
+            targetPos = coord #position à aller chercher
             pathLetters = FindPath(startPoint, targetPos)
 
-            for n in pathLetters: # on additionne les lettres (mouvements) une a une au tableau contenant tous les mouvements du bras
-                arm.movements.append(n)
+            if pathLetters:
+                for n in pathLetters: # on additionne les lettres (mouvements) une a une au tableau contenant tous les mouvements du bras
+                    arm.movements.append(n)
 
-        startPoint = targetPos # on change le point de départ comme expliqué plus haut
+            startPoint = targetPos # on change le point de départ comme expliqué plus haut
+        print(startPoint)

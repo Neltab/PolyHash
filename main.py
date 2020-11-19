@@ -75,8 +75,6 @@ if __name__ == "__main__":
 
     # tk.mainloop()
 
-    #METTRE LA RECUP DES DONNEES AVANT CA (Gaetan)
-
     ####################
     # Partie d'Anthime #
     ####################
@@ -90,6 +88,9 @@ if __name__ == "__main__":
 
     # print("Grille : 0=vide et 1=point de montage")
     # print(pointsGrid)
+
+    for b in bras:
+        pathfinding.CompleteArmTask(b)
 
     ####################
     # Partie de Lucas #

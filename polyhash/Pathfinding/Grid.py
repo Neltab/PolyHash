@@ -63,7 +63,8 @@ def GetNeighbours(node: Node):
 
 
 def GetArms(bras: list):
-    tab: list
+    tab: list = []
     for i in bras:
-        tab.append(i.pm[0]); tab.append(i.pm[1]) #on créé une liste de coordonnées regroupant les coords de tout les points de montage
+        tab.append(i.pm[0])
+        tab.append(i.pm[1]) #on créé une liste de coordonnées regroupant les coords de tout les points de montage
     return tab

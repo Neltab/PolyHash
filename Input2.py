@@ -27,7 +27,7 @@ def Extracint(liste):
     return(res)
 ############
 
-with open("e_dense_workspace.txt","r") as fichier:
+with open("a_example.txt","r") as fichier:
     caracglob = Extracint(fichier.readline())
     GRILLE = caracglob[:2]
     BRAS = caracglob[2]
