@@ -2,6 +2,7 @@ from polyhash.Pathfinding.Node import Node
 from polyhash.Pathfinding import settings as S
 import copy
 
+
 def apply_points_to_grid(g, p):  # retourne une grille ayant des 1 aux emplacements des points de montage et 0 sinon
     numberOfPoints = len(p) / 2
     newGrid = copy.deepcopy(g)
@@ -23,6 +24,7 @@ def GenerateNodeGrid(grid): #on créé une grille remplie de nodes, de la même 
                 newGrid[x][y] = Node(False, x, y)
 
     return newGrid
+
 
 #returns all the neighbour nodes from a given node
 def GetNeighbours(node: Node):
@@ -60,3 +62,8 @@ def GetNeighbours(node: Node):
     return neighbours
 
 
+def GetArms(bras: list):
+    tab: list
+    for i in bras:
+        tab.append(i.pm[0]); tab.append(i.pm[1]) #on créé une liste de coordonnées regroupant les coords de tout les points de montage
+    return tab

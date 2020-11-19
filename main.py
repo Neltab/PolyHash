@@ -4,7 +4,7 @@
 from Input2 import GRILLE, BRAS, NBPTDEMONT, NBTACHES, NBETAPES, LPOINTDEMONT, LTASK
 
 from polyhash.Pathfinding.Grid import apply_points_to_grid
-from polyhash.Pathfinding.Grid import GenerateNodeGrid
+from polyhash.Pathfinding.Grid import GenerateNodeGrid, GetArms
 from polyhash.Pathfinding import settings as S, pathfinding
 from polyhash.polyhutils.groupBy.Arm import Arm
 
@@ -75,13 +75,15 @@ if __name__ == "__main__":
 
     # tk.mainloop()
 
+    #METTRE LA RECUP DES DONNEES AVANT CA (Gaetan)
+
     ####################
     # Partie d'Anthime #
     ####################
 
     #génération de la grille remplie de zéros
     S.grid = [[0 for j in range (S.columns)] for i in range (S.lines)]
-    points = [0,0,2,0] #points de montage (tests)
+    points = GetArms(bras)
 
     pointsGrid = apply_points_to_grid(S.grid, points)  # c'est la grille qui contient les positions de collisions
     S.nodeGrid = GenerateNodeGrid(pointsGrid)

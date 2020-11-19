@@ -1,3 +1,4 @@
+from polyhash.Pathfinding import settings as S
 ############
 #Fonction qui calcul la distance entre les points d'assemblages.
 def Calculdistance(coord: list):
@@ -33,6 +34,10 @@ with open("e_dense_workspace.txt","r") as fichier:
     NBPTDEMONT = caracglob[3]
     NBTACHES = caracglob[4]
     NBETAPES = caracglob[5]
+
+    #bout de code Anthime
+    S.lines = GRILLE[0]
+    S.columns = GRILLE[1]
 
     #Boucle pour remplir LPOINTDEMONT.
     LPOINTDEMONT = []
