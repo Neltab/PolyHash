@@ -1,12 +1,17 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""
-    Module d'entrée pour la mise en oeuvre du projet Poly#.
-"""
+from Input2 import GRILLE, BRAS, NBPTDEMONT, NBTACHES, NBETAPES, LPOINTDEMONT, LTASK
 
-from polyhash import solve
- 
+from polyhash.Pathfinding.Grid import apply_points_to_grid
+from polyhash.Pathfinding.Grid import GenerateNodeGrid, GetArms
+from polyhash.Pathfinding import settings as S, pathfinding
+from polyhash.polyhutils.groupBy.Arm import Arm
+
+from polyhash import groupBy
+
+from output import CreateFile
+
 if __name__ == "__main__":
 
     #####################
@@ -74,16 +79,9 @@ if __name__ == "__main__":
     # Partie d'Anthime #
     ####################
 
-    #points de montage à vérifier
-    target = [0,0]
-
     #génération de la grille remplie de zéros
     S.grid = [[0 for j in range (S.columns)] for i in range (S.lines)]
-    points = [0,0,2,0]
-    #Cibles a atteindre avecl'algorithme
-    arm = Arm()
-    arm.taches = [[3,1],[3,0],[2,1]]
-    arm.pm = [0,0]
+    points = GetArms(bras)
 
     pointsGrid = apply_points_to_grid(S.grid, points)  # c'est la grille qui contient les positions de collisions
     S.nodeGrid = GenerateNodeGrid(pointsGrid)
@@ -91,10 +89,9 @@ if __name__ == "__main__":
     # print("Grille : 0=vide et 1=point de montage")
     # print(pointsGrid)
 
-    #Donner à la fonction un Bras (Arm) et la fonction va modifier les parametres du bras en question pour lui donner la liste des mouvements
     for b in bras:
         pathfinding.CompleteArmTask(b)
-        print(b.movements)
+
     ####################
     # Partie de Lucas #
     ####################
