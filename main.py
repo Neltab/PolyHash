@@ -84,7 +84,7 @@ if __name__ == "__main__":
     points = GetArms(bras)
 
     pointsGrid = apply_points_to_grid(S.grid, points)  # c'est la grille qui contient les positions de collisions
-    S.nodeGrid = GenerateNodeGrid(pointsGrid)
+    S.nodeGrid = GenerateNodeGrid(pointsGrid) #c'est la grille remplie de nodes utilisée pour le pathfinding
 
     # print("Grille : 0=vide et 1=point de montage")
     # print(pointsGrid)
