@@ -75,8 +75,9 @@ def RetracePath(startNode, endNode, arm: Arm):
         pathLetter.append(GetDirection(currentNode.parent, currentNode))
 
         #Occupation des cases
-        S.nodeGrid[currentNode.gridX][currentNode.gridY].walkable = False; #cette case est désormais un obstacle
-        tab[i] = [currentNode.gridX,currentNode.gridY]; i+=1
+        S.nodeGrid[currentNode.gridX][currentNode.gridY].walkable = False #cette case est désormais un obstacle
+        tab[i] = [currentNode.gridX,currentNode.gridY]
+        i+=1
 
         currentNode = currentNode.parent
 
