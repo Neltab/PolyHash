@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 class Node:
-
     gridX: int
     gridY: int
     gCost: int = 0
