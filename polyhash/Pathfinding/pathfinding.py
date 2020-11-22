@@ -80,7 +80,10 @@ def RetracePath(startNode, endNode, arm: Arm):
 
         currentNode = currentNode.parent
 
-    tab.reverse(); arm.occupiedCell.append(tab)
+    tab.reverse()
+    for j in tab:
+        arm.occupiedCell.append(j)
+
     pathLetter.reverse()
     path.reverse()
     return pathLetter #retourne un tableau de lettres
