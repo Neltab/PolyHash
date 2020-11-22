@@ -6,7 +6,7 @@ from polyhash.Pathfinding import settings as S
 from polyhash.polyhutils.groupBy.Arm import Arm
 import copy
 
-def FindPath(startPos: [], targetPos: []):
+def FindPath(startPos: [], targetPos: [], arm: Arm):
     startNode = Node(True,  startPos[0],  startPos[1])
     targetNode = Node(True, targetPos[0], targetPos[1])
 
@@ -19,7 +19,7 @@ def FindPath(startPos: [], targetPos: []):
     openSet.append(startNode)
 
     #On initialise une grille de Nodes, et pour chaque node, on lui assigne les valeurs de gCost et hCost correspondantes
-    nodeGrid = copy.deepcopy(S.nodeGrid)
+    nodeGrid = copy.deepcopy(S.nodeGrid) #cette copie est une copie de la grille par défaut initialisée dans le main
     for x in range(0, S.lines):
         for y in range(0, S.columns):
             nodeGrid[x][y].gCost = GetDistance(nodeGrid[x][y], startNode)
@@ -39,7 +39,7 @@ def FindPath(startPos: [], targetPos: []):
 
         if currentNode.gridX == targetNode.gridX and currentNode.gridY == targetNode.gridY: #on a trouvé le chemin YES
             targetNode.parent = currentNode.parent
-            return RetracePath(startNode, targetNode)
+            return RetracePath(startNode, targetNode, arm)
 
         #GetNeighbours retourne un tableau que l'on parcourt ici
         for neighbour in GetNeighbours(currentNode):
@@ -59,19 +59,28 @@ def FindPath(startPos: [], targetPos: []):
 #on ne prend pas en compte les diagonales ici car on ne peut bouger que dans 4 directions
 #ici le *10 dépend du cout de chaque mouvement dans l'alorithme A*, dans notre cas 10
 def GetDistance(nodeA: Node, nodeB: Node):
-    return 10*abs(nodeA.gridX-nodeB.gridX + nodeA.gridY-nodeB.gridY)
+    return 10*(abs(nodeA.gridX-nodeB.gridX) + abs(nodeA.gridY-nodeB.gridY))
 
 
-def RetracePath(startNode, endNode):
+def RetracePath(startNode, endNode, arm: Arm):
     path = []
     pathLetter = []
     currentNode: Node = endNode #on part de la fin
-
+    tab = [] #le tableau contenant les cases occupées par un bras, pour l'algo d'Aurelien
+    i = 0
+    #prendre les coordonnées des nodes une à une et modifier la node à cet emplacement en mettant un set de walkable sur false.
+    #ajouter variable de position utilisée au bras en question
     while not currentNode == startNode :
         path.append(currentNode)
         pathLetter.append(GetDirection(currentNode.parent, currentNode))
+
+        #Occupation des cases
+        S.nodeGrid[currentNode.gridX][currentNode.gridY].walkable = False; #cette case est désormais un obstacle
+        tab[i] = [currentNode.gridX,currentNode.gridY]; i+=1
+
         currentNode = currentNode.parent
 
+    tab.reverse(); arm.occupiedCell.append(tab)
     pathLetter.reverse()
     path.reverse()
     return pathLetter #retourne un tableau de lettres
@@ -97,7 +106,7 @@ def CompleteArmTask(arm : Arm): #targets est une liste de Taches (objet). Il fau
     for tache in arm.taches: #pour chaque tache
         for coord in tache.coordtask:
             targetPos = coord #position à aller chercher
-            pathLetters = FindPath(startPoint, targetPos)
+            pathLetters = FindPath(startPoint, targetPos, arm)
 
             if pathLetters:
                 for n in pathLetters: # on additionne les lettres (mouvements) une a une au tableau contenant tous les mouvements du bras
