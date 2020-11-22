@@ -7,6 +7,26 @@ class Arm:
         self.points = 0
         self.etapes = 0
         self.movements = []
+
+        self.occupiedCell = []
+        self.currentTask = None
+        self.isDoingTask = False
+        self.taskMoves = [] #Tableau contenant tous les nextMoves pour la tache en cours
+        self.isRetracting = False
+        self.taskDone = [] #Contient tous les taches terminées
+        self.movementsDone = [] #Tous les mouvements effectués réellement
+        self.currentMovements = []
+
+    def timeBeforeRetract(self):
+        opposite = {"L":"R","R":"L","U":"D","D":"U"}
+        counter = 0
+        for moves in self.taskMoves:
+            for i in range(len(moves) - 1):
+                counter += 1
+                if moves[i] != "W" and moves[i] == opposite[moves[i + 1]]:
+                    return counter
+
+
     def set_pm(self, pm, indice):
         if not self.represent_int(indice):
             return
