@@ -8,7 +8,7 @@ class Arm:
         self.etapes = 0
         self.movements = []
 
-        self.occupiedCell = []
+        self.occupiedCell = [] #Liste des cases occupées par le bras
         self.currentTask = None
         self.isDoingTask = False
         self.taskMoves = [] #Tableau contenant tous les nextMoves pour la tache en cours
