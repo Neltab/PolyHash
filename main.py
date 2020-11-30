@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+import math
 
-from Input2 import GRILLE, BRAS, NBPTDEMONT, NBTACHES, NBETAPES, LPOINTDEMONT, LTASK
+from Input2 import GRILLE, BRAS, NBPTDEMONT, NBTACHES, NBETAPES, LPOINTDEMONT, LTASK, Tache
 
 from polyhash.Pathfinding.Grid import apply_points_to_grid
 from polyhash.Pathfinding.Grid import GenerateNodeGrid, GetArms
@@ -9,6 +10,8 @@ from polyhash.Pathfinding import settings as S, pathfinding
 from polyhash.polyhutils.groupBy.Arm import Arm
 
 from polyhash import groupBy
+
+from polyhash.taskOptimization import movementsCreation as mc
 
 from output import CreateFile
 
@@ -19,6 +22,7 @@ if __name__ == "__main__":
     #####################
 
     bras = groupBy.rendement(LTASK, LPOINTDEMONT, BRAS)
+
     # for b in bras:
     #     print(b.taches[0].coordtask[0], b.taches[1].coordtask[0], b.taches[2].coordtask[0])
 
@@ -81,19 +85,44 @@ if __name__ == "__main__":
 
     #génération de la grille remplie de zéros
     S.grid = [[0 for j in range (S.columns)] for i in range (S.lines)]
-    points = GetArms(bras)
+    # points = GetArms(bras)
+    points = []
 
     pointsGrid = apply_points_to_grid(S.grid, points)  # c'est la grille qui contient les positions de collisions
     S.nodeGrid = GenerateNodeGrid(pointsGrid)
 
+    #Re Aurelien ##############################
+    mc.moveToFirstTask(bras[0])
+    mc.createMoves(bras[0])
+
+    # print(bras[0].pm)
+    # print(bras[0].taches[0].coordtask)
+    # print(bras[0].movements)
+    # print(len(bras[0].occupiedCell))
+
+    for t in range(NBETAPES):
+        for b in bras:
+            if b.nextMoves == []:
+                if b.isDoingTask:
+                    # Ajouter les mouvements de la taches aux mouvements à output
+                    # Ajouter la tache a la liste des taches terminées
+                    b.isDoingTask = False
+                    # Ajouter les prochains mouvements (pour aller à la prochaine tache) a b.nextMoves
+                else:
+                    b.isDoingTask = True
+                    # Ajouter les prochains mouvements (ceux de la tache) à b.nextMoves
+            
+    ###########################################
+
     # print("Grille : 0=vide et 1=point de montage")
     # print(pointsGrid)
 
-    for b in bras:
-        pathfinding.CompleteArmTask(b)
+    
+    # for b in bras:
+    #     pathfinding.CompleteArmTask(b)
 
     ####################
     # Partie de Lucas #
     ####################
     
-    CreateFile(bras)
+    # CreateFile([b])

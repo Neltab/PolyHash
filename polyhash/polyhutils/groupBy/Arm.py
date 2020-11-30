@@ -16,6 +16,7 @@ class Arm:
         self.taskDone = [] #Contient tous les taches terminées
         self.movementsDone = [] #Tous les mouvements effectués réellement
         self.currentMovements = []
+        self.nextMoves = []
 
     def timeBeforeRetract(self):
         opposite = {"L":"R","R":"L","U":"D","D":"U"}
