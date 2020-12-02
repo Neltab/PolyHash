@@ -12,7 +12,7 @@ __all__ = ['get_arms']
 # * pointsMontage: list<list<int>> = Liste des coordonnées des points de montage
 # * nbBras: int = Nombre de bras à placer
 # * return: list<Arm> = Liste des bras à placer
-def get_arms(taches: list, pointsMontage: list, nbBras: int) -> list:
+def get_arms(taches: list, pointsMontage: list, nbBras: int, nbEtapes: int) -> list:
     bras = [Arm() for _ in range(nbBras)]
 
     nbEdges = len(taches)
@@ -34,18 +34,22 @@ def get_arms(taches: list, pointsMontage: list, nbBras: int) -> list:
         bras[i].add_steps(taches[indiceTache].nbcase if taches[indiceTache].nbassemb > 1 else 0)
         bras[i].add_steps(calc_dist(pointsMontage[indicePM], taches[bras[i].tachesIndices[0]].coordtask[0]))
 
-    for i in range(nbEdges - nbBras): # Equivalent à while remaining edges != []
-        current = i % nbBras #On récupère l'indice du bras que l'on est entrain de traiter
+    idx = 0
+    current = 0
+    while bras[current].etapes < nbEtapes*1.5 and remainingEdges != []: # facteur 1.5 pour donner un peu de marge
+        current = idx % nbBras #On récupère l'indice du bras que l'on est entrain de traiter
         maxIndex = get_max_index(yieldMatrix[bras[current].tachesIndices[-1]], remainingEdges) # On cherche le meilleur rendement à partir de la dernière tache
         # On ajoute les différentes valeurs liées à la tache trouvée à notre bras
         bras[current].add_task(taches[maxIndex], maxIndex)
-        bras[current].add_points(taches[maxIndex].nbcase if taches[maxIndex].nbassemb > 1 else 0) #TODO: remplacer rendement par la variable donnant la longueur de la tache
         bras[current].add_points(taches[maxIndex].nbpoint)
+        bras[current].add_steps(taches[maxIndex].nbcase)
         bras[current].add_steps(calc_dist(taches[bras[current].tachesIndices[-2]].coordtask[-1], taches[bras[current].tachesIndices[-1]].coordtask[0]))
         remainingEdges.remove(maxIndex) # On enlève cette tache de la liste des taches à traiter
+        idx += 1
 
     # TODO décommenter cette fonction pour optimiser à nouveau le trajet
     # twoOpt(bras)
+    # print(bras.)
     return bras
 
 # Calcule la distance de Manhattan entre deux points
@@ -63,7 +67,7 @@ def calc_dist(x: list, y: list) -> int:
 def get_yield(taches, i, j):
     # ! A voir si ajouter la distance de la tache est vraiment intéressant
     # TODO Remplacer taches[i].coordtask[-1] par taches[i].coordtask[0] (optimisation du trajet avec le futur programme)
-    dist = calc_dist(taches[i].coordtask[-1], taches[j].coordtask[0]) + (taches[j].nbcase if taches[j].nbassemb==1 else 0)
+    dist = calc_dist(taches[i].coordtask[-1], taches[j].coordtask[0]) + taches[j].nbcase
     if dist == 0:
         return float('inf')
     return taches[j].nbpoint / (dist)
@@ -73,7 +77,7 @@ def get_yield(taches, i, j):
 # * pointsMontages: list<int> = Liste des coordonnées du point de montage traité
 def get_pm_yield(tache, pointMontage):
     # ! A voir si ajouter la distance de la tache est vraiment intéressant
-    return tache.nbpoint / (calc_dist(pointMontage, tache.coordtask[0]) + (tache.nbcase if tache.nbassemb==1 else 0))
+    return tache.nbpoint / (calc_dist(pointMontage, tache.coordtask[0]) + tache.nbcase)
 
 # Recherche le rendement maximum dans une liste et renvoie son indice
 # * yieldRow: list<float> = ligne d'une matrice de rendement.

@@ -19,7 +19,8 @@ def createMoves(bras: Arm):
                 closer = findCloserCell(nextPos, dist(currentPos, nextPos), bras)
                 if closer != None:
                     moves += retracePath(closer, bras)
-                    moves += pathfinding.FindPath(bras.occupiedCell[closer], nextPos, bras)
+                    if nextPos != bras.occupiedCell[closer]:
+                        moves += pathfinding.FindPath(bras.occupiedCell[closer], nextPos, bras)
                 else:
                     moves += pathfinding.FindPath(currentPos, nextPos, bras)
 
@@ -28,27 +29,46 @@ def createMoves(bras: Arm):
             if idx:
                 moves += retracePath(idx, bras)
                 if t + 1 < len(bras.taches):
-                    movesToNextTask = pathfinding.FindPath(bras.occupiedCell[idx], bras.taches[t+1].coordtask[0], bras)
+                    closer = findCloserCell(bras.taches[t+1].coordtask[0], dist(bras.occupiedCell[idx], bras.taches[t+1].coordtask[0]), bras)
+                    if closer != None:
+                        movesToNextTask = retracePath(closer, bras)
+                        if bras.occupiedCell[closer] != bras.taches[t+1].coordtask[0]:
+                            movesToNextTask += pathfinding.FindPath(bras.occupiedCell[closer], bras.taches[t+1].coordtask[0], bras)
+                    else:
+                        movesToNextTask = pathfinding.FindPath(bras.occupiedCell[idx], bras.taches[t+1].coordtask[0], bras)
                 # TODO: ajouter les mouvements depuis idx jusqu'à la prochaine tache
             else:
                 # Todo: ajouter les mouvements depuis bras.occupiedCell[-1] jusqu'à la prochaine tache
                 if t + 1 < len(bras.taches):
-                    movesToNextTask = pathfinding.FindPath(bras.occupiedCell[-1], bras.taches[t+1].coordtask[0], bras)
+                    closer = findCloserCell(bras.taches[t+1].coordtask[0], dist(bras.occupiedCell[-1], bras.taches[t+1].coordtask[0]), bras)
+                    if closer != None:
+                        movesToNextTask = retracePath(closer, bras)
+                        if bras.occupiedCell[closer] != bras.taches[t+1].coordtask[0]:
+                            movesToNextTask += pathfinding.FindPath(bras.occupiedCell[closer], bras.taches[t+1].coordtask[0], bras)
+                    else:
+                        movesToNextTask = pathfinding.FindPath(bras.occupiedCell[-1], bras.taches[t+1].coordtask[0], bras)
 
             bras.movements.append(moves)
             if movesToNextTask != None:
                 bras.movements.append(movesToNextTask)
+            else:
+                bras.movements.append([])
 
-        elif t+1< len(bras.taches):
+        # Si la tache contient 1 seule case
+        elif t+1 < len(bras.taches):
+            bras.movements.append([]) #Pas de mouvements à faire pour la tache
             movesToNextTask = pathfinding.FindPath(bras.occupiedCell[-1], bras.taches[t+1].coordtask[0], bras)
-            bras.movements.append([])
-            bras.movements.append(movesToNextTask)
+            if movesToNextTask == None:
+                bras.movements.append([]) #Pas de mouvements pour aller à la tache suivante
+            else:
+                bras.movements.append(movesToNextTask)
         
 def retracePath(index: int, b: Arm):
         moves = []
         currentPos = b.occupiedCell.pop()
         for _ in range(len(b.occupiedCell) - index):
             nextPos = b.occupiedCell.pop()
+            # S.nodeGrid[currentPos[0]][currentPos[1]].walkable = True
             if currentPos[0] > nextPos[0]: #nextPos à gauche de currentPos
                 moves.append("L")
             elif currentPos[0] < nextPos[0]:
@@ -59,6 +79,7 @@ def retracePath(index: int, b: Arm):
                 moves.append("U")
             currentPos = nextPos
         b.occupiedCell.append(currentPos) #On remet la derniere case enlevée sinon elle disparait
+        # S.nodeGrid[currentPos[0]][currentPos[1]].walkable = False
         return moves
 
 def findCloserCell(cell: list, distMin: int, b: Arm) -> int:

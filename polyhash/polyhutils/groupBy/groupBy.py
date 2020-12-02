@@ -8,8 +8,8 @@ else:
 __all__ = ['groupBy']
 
 class groupBy:
-    def rendement(taches: list, pointsMontage: list, nbBras: int) -> list:
-        return yield_chain.get_arms(taches, pointsMontage, nbBras)
+    def rendement(taches: list, pointsMontage: list, nbBras: int, nbEtapes: int) -> list:
+        return yield_chain.get_arms(taches, pointsMontage, nbBras, nbEtapes)
 
 if __name__ == "__main__":
     import yield_chain

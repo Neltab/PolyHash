@@ -27,7 +27,7 @@ def Extracint(liste):
     return(res)
 ############
 
-with open("d_tight_schedule.txt","r") as fichier:
+with open("b_single_arm.txt","r") as fichier:
     caracglob = Extracint(fichier.readline())
     GRILLE = caracglob[:2]
     BRAS = caracglob[2]
