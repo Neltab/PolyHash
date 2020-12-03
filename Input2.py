@@ -51,6 +51,7 @@ with open("b_single_arm.txt","r") as fichier:
             self.nbassemb = nbassemb
             self.nbpoint = nbpoint
             self.coordtask = coordtask
+            self.indice = 0
 
     #On stock chaqu'une des taches dans une liste dont l'indice de la liste = indice tache.
     LTASK = [0 for nt in range(NBTACHES)]
@@ -75,6 +76,7 @@ with open("b_single_arm.txt","r") as fichier:
         nbcase = Calculdistance(coordtask)
         exec("Tache" + str(w) + " = " + "Tache(nbcase, nbassemb, nbpoint, coordtask)")
         LTASK[w] = Tache(nbcase, nbassemb, nbpoint, coordtask)
+        LTASK[w].indice = w
 
 
 #### Example de fonctionnement d'appel de la liste sur le fichier a_ecample.txt:

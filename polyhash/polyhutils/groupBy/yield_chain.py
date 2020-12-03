@@ -49,7 +49,6 @@ def get_arms(taches: list, pointsMontage: list, nbBras: int, nbEtapes: int) -> l
 
     # TODO décommenter cette fonction pour optimiser à nouveau le trajet
     # twoOpt(bras)
-    # print(bras.)
     return bras
 
 # Calcule la distance de Manhattan entre deux points

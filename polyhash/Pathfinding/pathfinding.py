@@ -104,7 +104,7 @@ def GetDirection(n1: Node, n2: Node): #retourne la position de la node 2 par rap
 def CompleteArmTask(arm : Arm): #targets est une liste de Taches (objet). Il faut donc récupérer les coordonnées de chacune des tâches
 
     startPoint = arm.pm #le point de départ de l'algo, au début c'est le point de montage, mais il change après chaque path complété comme le bras ne repart pas du pm
-    print(startPoint)
+    # print(startPoint)
     targets = arm.taches #au format [[x1, y1],[x2,y2]...]
 
     for tache in arm.taches: #pour chaque tache
@@ -117,4 +117,4 @@ def CompleteArmTask(arm : Arm): #targets est une liste de Taches (objet). Il fau
                     arm.movements.append(n)
 
             startPoint = targetPos # on change le point de départ comme expliqué plus haut
-        print(startPoint)
+        # print(startPoint)
