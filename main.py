@@ -22,6 +22,8 @@ if __name__ == "__main__":
     #####################
 
     bras = groupBy.rendement(LTASK, LPOINTDEMONT, BRAS, NBETAPES)
+    # bras = groupBy.rendement(LTASK, LPOINTDEMONT, BRAS//2, NBETAPES)
+    print("Init done")
 
     # for b in bras:
     #     print(b.taches[0].coordtask[0], b.taches[1].coordtask[0], b.taches[2].coordtask[0])
@@ -34,6 +36,8 @@ if __name__ == "__main__":
     S.grid = [[0 for j in range (S.columns)] for i in range (S.lines)]
     # points = GetArms(bras)
     points = []
+    for pm in LPOINTDEMONT:
+        S.grid[pm[0]][pm[1]] = 1
 
     pointsGrid = apply_points_to_grid(S.grid, points)  # c'est la grille qui contient les positions de collisions
     S.nodeGrid = GenerateNodeGrid(pointsGrid)
@@ -44,7 +48,7 @@ if __name__ == "__main__":
         mc.moveToFirstTask(b)
         mc.createMoves(b)
         debug += 1
-
+    print("move done")
     # print(bras[-1].pm)
     # print(bras[-1].taches[0].coordtask)
     # print(bras[-1].movements)
@@ -72,6 +76,8 @@ if __name__ == "__main__":
         arm.occupiedCell = [arm.pm]
         arm.nextMoves = arm.movements.pop(0)
 
+    print("Init moves done")
+
     def checkForNextMove(b: Arm) -> bool:
         if b.nextMoves == []:
             if b.isDoingTask:
@@ -79,6 +85,8 @@ if __name__ == "__main__":
                 b.movementsDone += b.currentMovements
                 b.currentMovements = []
                 # Ajouter la tache a la liste des taches terminées
+                if b.taches == []:
+                    return True
                 b.taskDone.append(b.taches.pop(0))
                 # On signale qu'on a finit la tache
 
@@ -97,17 +105,17 @@ if __name__ == "__main__":
                 # else:
                 #     b.movements.pop(0)
             # Ajouter les prochains mouvements (ceux de la tache ou pour aller à la prochaine) à b.nextMoves
-            if len(b.movements) >= 1:
-                b.nextMoves = b.movements.pop(0)
+            if b.movements == []:
                 return True
+            b.nextMoves = b.movements.pop(0)
             checkForNextMove(b)
         return False
 
     conflit = 0
     for t in range(NBETAPES):
         for i in range(len(bras)):
-            if i == 28:
-                print("debug")
+            # if t == 2686:
+                # print("debug")
             b = bras[i]
             
             done = checkForNextMove(b)
@@ -119,9 +127,9 @@ if __name__ == "__main__":
                 if occupiedCellGrid[newPos[0]][newPos[1]] == 0:
                     b.occupiedCell.append(newPos)
                     S.nodeGrid[newPos[0]][newPos[1]].walkable = False
-                    occupiedCellGrid[newPos[0]][newPos[1]] = i + 1 
+                    occupiedCellGrid[newPos[0]][newPos[1]] = -i - 1 
                     b.currentMovements.append(move)
-                elif occupiedCellGrid[newPos[0]][newPos[1]] == i + 1:
+                elif occupiedCellGrid[newPos[0]][newPos[1]] == -i - 1:
                     oldPos = b.occupiedCell.pop()
                     S.nodeGrid[oldPos[0]][oldPos[1]].walkable = True
                     occupiedCellGrid[oldPos[0]][oldPos[1]] = 0
@@ -129,8 +137,8 @@ if __name__ == "__main__":
                 else:
                     conflit +=1
                     # # Gere le conflit
-                    # b.currentMovements.append("W")
-                    # b.nextMoves.insert(0,move)
+                    b.currentMovements.append("W")
+                    b.nextMoves.insert(0,move)
     print(conflit)
 
 

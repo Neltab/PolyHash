@@ -37,6 +37,7 @@ def get_arms(taches: list, pointsMontage: list, nbBras: int, nbEtapes: int) -> l
     idx = 0
     current = 0
     while bras[current].etapes < nbEtapes*1.5 and remainingEdges != []: # facteur 1.5 pour donner un peu de marge
+    # while remainingEdges != []:
         current = idx % nbBras #On récupère l'indice du bras que l'on est entrain de traiter
         maxIndex = get_max_index(yieldMatrix[bras[current].tachesIndices[-1]], remainingEdges) # On cherche le meilleur rendement à partir de la dernière tache
         # On ajoute les différentes valeurs liées à la tache trouvée à notre bras

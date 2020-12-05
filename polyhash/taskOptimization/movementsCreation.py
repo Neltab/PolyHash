@@ -7,8 +7,9 @@ def moveToFirstTask(bras: Arm):
 
 def createMoves(bras: Arm):
     for t in range(len(bras.taches)):
-        if t == 563:
-            print('oui')
+        # print(t)
+        # if t == 563:
+        #     print('oui')
         tache = bras.taches[t]
         if t+1 < len(bras.taches):
             nextTache = bras.taches[t+1]

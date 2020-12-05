@@ -19,7 +19,8 @@ def FindPath(startPos: [], targetPos: [], arm: Arm):
     openSet.append(startNode)
 
     #On initialise une grille de Nodes, et pour chaque node, on lui assigne les valeurs de gCost et hCost correspondantes
-    nodeGrid = copy.deepcopy(S.nodeGrid) #cette copie est une copie de la grille par défaut initialisée dans le main
+    # nodeGrid = copy.deepcopy(S.nodeGrid) #cette copie est une copie de la grille par défaut initialisée dans le main
+    nodeGrid = S.nodeGrid[:]
     for x in range(0, S.lines):
         for y in range(0, S.columns):
             nodeGrid[x][y].gCost = GetDistance(nodeGrid[x][y], startNode)
