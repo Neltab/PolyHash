@@ -1,7 +1,12 @@
 from polyhash.Pathfinding import settings as S
-############
-#Fonction qui calcul la distance entre les points d'assemblages.
+
+
 def Calculdistance(coord: list):
+    """Fonction qui calcul la distance entre les points d'assemblages d'une taches.
+
+    :param coord : liste[liste] des points d'assemblages.
+    :return : ditance : distance total, en nb de cases, entre les points d'assemblages.
+    """
     distance : int = 0
     size = len(coord)
     if size < 2:
@@ -11,22 +16,25 @@ def Calculdistance(coord: list):
             distance = abs(coord[tra][0]-coord[tra+1][0]) + abs(coord[tra][1] - coord[tra+1][1]) + distance
     return distance
 
-#Fonction qui permet d'obtenir à partir des données lu par readline() une liste d'entier qui correspond à la ligne.
-#Les listes que cette fonction traite sont des listes de str, où des entiers(encore en str) sont séparés par des espaces
-#et ou il y a le caractère "retour à la ligne" = "/n" a la fin de la séquence. (il faudra le remplacer par un caractère espace)
-def Extracint(liste):
-    liste = liste[:-1] + " "
+
+def Extracint(liste_str):
+    """Fonction qui permet d'obtenir à partir des données lu par readline() une liste d'entier qui correspond à la ligne.
+
+    :param liste_str : chaine de caractères correspondant à une ligne du fichier.
+    :return : liste d'entier correspondant à la ligne du fichier.
+    """
+    liste_str = liste_str[:-1] + " "
     tempstr = ""
     res = []
-    for i in liste :
+    for i in liste_str :
         if i != " ":
             tempstr = tempstr + i
         else :
             res.append(int(tempstr))
             tempstr = ""
     return(res)
-############
 
+#lecture du fichier
 with open("a_example.txt","r") as fichier:
     caracglob = Extracint(fichier.readline())
     GRILLE = caracglob[:2]
@@ -43,14 +51,6 @@ with open("a_example.txt","r") as fichier:
     LPOINTDEMONT = []
     for j in range(NBPTDEMONT):
         LPOINTDEMONT.append(Extracint(fichier.readline()))
-
-    #Création de la classe "Tache" pour lister les taches et leur caractéristique.
-    class Tache:
-        def __init__(self, nbcase : int, nbassemb : int, nbpoint : int, coordtask : list):
-            self.nbcase = nbcase
-            self.nbassemb = nbassemb
-            self.nbpoint = nbpoint
-            self.coordtask = coordtask
 
     #On stock chaqu'une des taches dans une liste dont l'indice de la liste = indice tache.
     LTASK = [0 for nt in range(NBTACHES)]
