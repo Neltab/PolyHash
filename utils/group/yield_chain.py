@@ -1,6 +1,6 @@
 from typing import List, NewType
 from .Arm import Arm
-from ..input import Tache
+from ..input.Tache import Tache
 
 __all__ = ['get_arms']
 
@@ -31,24 +31,28 @@ def get_arms(taches: List[Tache], pointsMontage: List[Coordinates], nbBras: int)
     for i in range(nbBras):
         indicePM, indiceTache = get_max_index_pm(pmYieldMatrix) # On récupère l'indice du point de montage et de la tache qui offrent le meilleur rendement
         remainingEdges.remove(indiceTache)
+        currentTask = taches[indiceTache]
 
         # Ajout des différentes valeurs définissant le bras
-        bras[i].set_pm(pointsMontage[indicePM], indicePM)
-        bras[i].add_task(taches[indiceTache], indiceTache)
-        bras[i].add_points(taches[indiceTache].nbpoint)
-        bras[i].add_steps(taches[indiceTache].nbcase if taches[indiceTache].nbassemb > 1 else 0)
-        bras[i].add_steps(calc_dist(pointsMontage[indicePM], taches[bras[i].tachesIndices[0]].coordtask[0]))
+        bras[i].set_pm(pointsMontage[indicePM])
+        bras[i].add_task(currentTask)
+        bras[i].add_points(currentTask.nbpoint)
+        bras[i].add_steps(currentTask.nbcase if currentTask.nbassemb > 1 else 0)
+
+        # bras[i].add_steps(calc_dist(pointsMontage[indicePM], taches[bras[i].tachesIndices[0]].coordtask[0]))
+        bras[i].add_steps(calc_dist(pointsMontage[indicePM], bras[i].taches[0].coordtask[0]))
 
     for i in range(nbEdges - nbBras): # Equivalent à while remaining edges != []
         current = i % nbBras #On récupère l'indice du bras que l'on est entrain de traiter
         # On cherche le meilleur rendement à partir de la dernière tache
         maxIndex = get_max_index(yieldMatrix[bras[current].tachesIndices[-1]], remainingEdges)
+        currentTask = taches[maxIndex]
 
         # On ajoute les différentes valeurs liées à la tache trouvée à notre bras
-        bras[current].add_task(taches[maxIndex], maxIndex)
-        bras[current].add_points(taches[maxIndex].nbcase if taches[maxIndex].nbassemb > 1 else 0)
-        bras[current].add_points(taches[maxIndex].nbpoint)
-        bras[current].add_steps(calc_dist(taches[bras[current].tachesIndices[-2]].coordtask[-1], taches[bras[current].tachesIndices[-1]].coordtask[0]))
+        bras[current].add_task(currentTask)
+        bras[current].add_points(currentTask.nbcase if currentTaskcurrentTaskmoi.nbassemb > 1 else 0)
+        bras[current].add_points(currentTask.nbpoint)
+        bras[current].add_steps(calc_dist(bras[current].taches[-2].coordtask[-1], bras[current].taches[-1].coordtask[0]))
 
         remainingEdges.remove(maxIndex)
 
@@ -68,13 +72,16 @@ def calc_dist(x: Coordinates, y: Coordinates) -> int:
 
 
 def get_yield(t1: Tache, t2: Tache) -> float:
-    """ Calcule le rendement entre deux taches (en fonction de la distance)
+    """ Calcule le rendement entre deux taches (en fonction de la distance)\n
+    On calcule la distance entre la premiere case de chaque tache car notre
+    algorithme de déplacement à tendance à revenir à la premiere case de sa
+    tache pour limiter le nombre de cases occupées 
 
     :param t1 : Premiere tache
     :param t2 : Seconde tache
     :return : Rendement calculé
     """
-    dist = calc_dist(t1.coordtask[-1], t2.coordtask[0]) + (t2.nbcase if t2.nbassemb > 1 else 0)
+    dist = calc_dist(t1.coordtask[0], t2.coordtask[0]) + (t2.nbcase if t2.nbassemb > 1 else 0)
     if dist == 0:
         return float('inf')
     return t2.nbpoint / (dist)
@@ -109,7 +116,7 @@ def get_max_index(yield_row: List[float], remaining_edges: List[int]) -> int:
     return maxIndex
 
 def get_max_index_pm(matrix: List[List[float]]) -> int:
-    """Recherche le rendement maximum pour n'importe quel bras
+    """Recherche le rendement maximum pour n'importe quel bras\n
 
     On prend toute la matrice car on recherche le maximum global
     afin de déterminer le couple (point de montage, tache) offrant
