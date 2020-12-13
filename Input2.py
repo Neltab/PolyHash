@@ -1,5 +1,5 @@
 from polyhash.Pathfinding import settings as S
-
+from Tache import Tache
 
 def Calculdistance(coord: list):
     """Fonction qui calcul la distance entre les points d'assemblages d'une taches.
@@ -73,7 +73,6 @@ with open("a_example.txt","r") as fichier:
         else :
             coordtask = [temp]
         nbcase = Calculdistance(coordtask)
-        exec("Tache" + str(w) + " = " + "Tache(nbcase, nbassemb, nbpoint, coordtask)")
         LTASK[w] = Tache(nbcase, nbassemb, nbpoint, coordtask)
 
 
