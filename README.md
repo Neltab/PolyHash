@@ -1,14 +1,11 @@
-Projet Poly#
-============
+<h1 align="center">
+    <span style="color:#00adef; font-weight:500;">P</span>olyHash
+</h1>
 
-Le fichier `README.md` est écrit en **Markdown**
-et permet de soigner la _mise en forme_.
+<h3 align="center">
+    Projet de programmation basé sur le concours Hash code de google
+</h3>
+<br/>
+<img src="https://img.shields.io/badge/score-1400503-%2300adef?style=flat-square"/>
 
-===========
-
-Groupe H :
-
-Aurelien BOISSIERE 
-Gaetan BALEM
-Lucas MAHE
-Anthime HUCHET
+[[_TOC_]]

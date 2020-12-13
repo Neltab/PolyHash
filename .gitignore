@@ -1,10 +1,2 @@
-.idea
 .vscode
-/Project_Default.xml
-a_example.txt
-b_single_arm.txt
-c_few_arms.txt
-d_tight_schedule.txt
-e_dense_workspace.txt
-f_decentralized.txt
-inputGUI.py
+__pycache__/

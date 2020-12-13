@@ -1,0 +1,45 @@
+https://realpython.com/documenting-python-code/
+
+Réorgnaiser le code en package:
+
+Pour les classes:
+  Commenter en dessous de la def de chaque classe
+    Ce qu'elle fait
+    Ces attributs
+    Ces fonctions
+    Exemple :
+	"""Prints what the animals name is and what sound it makes.
+
+        If the argument `sound` isn't passed in, the default Animal
+        sound is used.
+
+        Parameters
+        ----------
+        sound : str, optional
+            The sound the animal makes (default is None)
+
+        Raises
+        ------
+        NotImplementedError
+            If no sound is set for the animal or passed in as a
+            parameter.
+        """
+
+  Ajouter si possible un __str__ basique -> lisibilité de débug
+
+Pour les fonctions:
+  Commenter en dessous de la def
+    Le but de la fonction
+    Les variables en entrées
+    L'output
+    Exemple:
+	"""Gets and prints the spreadsheet's header columns
+
+	:param file_loc: The file location of the spreadsheet
+	:type file_loc: str
+	:param print_cols: A flag used to print the columns to the console
+	    (default is False)
+	:type print_cols: bool
+	:returns: a list of strings representing the header columns
+	:rtype: list
+	"""
