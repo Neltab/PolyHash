@@ -38,7 +38,7 @@ def FindPath(startPos: [], targetPos: [], arm: Arm):
         currentNode: Node = openSet[0]
         for i in range(1,len(openSet)): # dans cette boucle on cherche la node la plus intéressante du point de vue de son cout, et on l'assigne à currentnode.
             if openSet[i].fCost() <= currentNode.fCost():
-                if openSet[i].hCost < currentNode.hCost:
+                if openSet[i].hCost < currentNode.hCost: #dans le cas ou les fCost sont égaux, on prend celle avec le hCost le plus faible.
                     currentNode = openSet[i]
 
         openSet.remove(currentNode) #la node est maintenant vérifiée
