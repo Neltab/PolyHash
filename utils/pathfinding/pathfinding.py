@@ -54,6 +54,20 @@ def FindPath(startPos: [], targetPos: [], arm: Arm):
             targetNode.parent = currentNode.parent
             return RetracePath(startNode, targetNode, arm)
 
+        #GetNeighbours retourne un tableau que l'on parcourt ici
+        for neighbour in GetNeighbours(currentNode):
+            if (not neighbour.walkable) or neighbour in closedSet:
+                continue
+
+            newCostToNeighbour : int = currentNode.gCost + GetDistance(currentNode, neighbour) #dans certains cas, le cout initial de la Node n'est pas le même, car un chemin peut être le meilleur à un instant t, mais pas forcément à t+1
+            if (newCostToNeighbour < neighbour.gCost) or (not neighbour in openSet):
+                neighbour.gCost = newCostToNeighbour
+                neighbour.hCost = GetDistance(neighbour, targetNode)
+                neighbour.parent = currentNode
+
+                if not neighbour in openSet:
+                    openSet.append(neighbour)
+
 
 def GetDistance(nodeA: Node, nodeB: Node):
     """retourne à combien de mouvements se trouve une case d'une autre
