@@ -48,8 +48,7 @@ def FindPath(startPos: [], targetPos: [], arm: Arm):
             return RetracePath(startNode, targetNode, arm)
 
 
-
-        '''#GetNeighbours retourne un tableau que l'on parcourt ici                 TEST JE NE PENSE PAS QUE CE SOIT UTILE COMME ON A PAS DE DIAGONALES
+        #GetNeighbours retourne un tableau que l'on parcourt ici
         for neighbour in GetNeighbours(currentNode):
             if (not neighbour.walkable) or neighbour in closedSet:
                 continue
@@ -61,7 +60,7 @@ def FindPath(startPos: [], targetPos: [], arm: Arm):
                 neighbour.parent = currentNode
 
                 if not neighbour in openSet:
-                    openSet.append(neighbour)'''
+                    openSet.append(neighbour)
 
 #retourne à combien de mouvements se trouve une case d'une autre
 #on ne prend pas en compte les diagonales ici car on ne peut bouger que dans 4 directions
