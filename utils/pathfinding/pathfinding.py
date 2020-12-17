@@ -38,7 +38,7 @@ def FindPath(startPos: [], targetPos: [], arm: Arm):
         currentNode: Node = openSet[0]
         for i in range(1,len(openSet)): # dans cette boucle on cherche la node la plus intéressante du point de vue de son cout, et on l'assigne à currentnode.
             if openSet[i].fCost() <= currentNode.fCost():
-                if openSet[i].hCost < currentNode.hCost:
+                if openSet[i].hCost < currentNode.hCost: #dans le cas ou les fCost sont égaux, on prend celle avec le hCost le plus faible.
                     currentNode = openSet[i]
 
         openSet.remove(currentNode) #la node est maintenant vérifiée
@@ -53,6 +53,20 @@ def FindPath(startPos: [], targetPos: [], arm: Arm):
         if currentNode.gridX == targetNode.gridX and currentNode.gridY == targetNode.gridY: #on est rendus à la node de fin, on appelle la fonction qui écrit les mouvements
             targetNode.parent = currentNode.parent
             return RetracePath(startNode, targetNode, arm)
+
+        #GetNeighbours retourne un tableau que l'on parcourt ici
+        for neighbour in GetNeighbours(currentNode):
+            if (not neighbour.walkable) or neighbour in closedSet:
+                continue
+
+            newCostToNeighbour : int = currentNode.gCost + GetDistance(currentNode, neighbour) #dans certains cas, le cout initial de la Node n'est pas le même, car un chemin peut être le meilleur à un instant t, mais pas forcément à t+1
+            if (newCostToNeighbour < neighbour.gCost) or (not neighbour in openSet):
+                neighbour.gCost = newCostToNeighbour
+                neighbour.hCost = GetDistance(neighbour, targetNode)
+                neighbour.parent = currentNode
+
+                if not neighbour in openSet:
+                    openSet.append(neighbour)
 
 
 def GetDistance(nodeA: Node, nodeB: Node):
@@ -75,7 +89,6 @@ def RetracePath(startNode, endNode, arm: Arm):
         :param endNode : node de fin
         :param arm : le bras sur lequel on effectue les mouvements
     """
-    #path = []
     pathLetter = [] #contient les lettres de direction
     currentNode: Node = endNode #on part de la fin
     tab = [] #le tableau contenant les cases occupées par un bras, pour l'algo d'Aurelien
@@ -98,8 +111,8 @@ def RetracePath(startNode, endNode, arm: Arm):
     arm.occupiedCell += tab
 
     pathLetter.reverse()
-    #path.reverse()
-    return pathLetter #retourne un tableau de lettres
+    arm.movements += pathLetter  # On ajoute les lettres au tableau de coordonnées du bras.
+    return
 
 
 def GetDirection(n1: Node, n2: Node):
@@ -128,11 +141,7 @@ def CompleteArmTask(arm : Arm):
     for tache in arm.taches: #pour chaque tache
         for coord in tache.coordtask:
             targetPos = coord #position à aller chercher
-            pathLetters = FindPath(startPoint, targetPos, arm)
-
-            if pathLetters:
-                for n in pathLetters: # on additionne les lettres (mouvements) une a une au tableau contenant tous les mouvements du bras
-                    arm.movements.append(n)
+            FindPath(startPoint, targetPos, arm)
 
             startPoint = targetPos # on change le point de départ comme expliqué plus haut
         print(startPoint)
