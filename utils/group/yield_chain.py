@@ -50,7 +50,7 @@ def get_arms(taches: List[Tache], pointsMontage: List[Coordinates], nbBras: int)
 
         # On ajoute les différentes valeurs liées à la tache trouvée à notre bras
         bras[current].add_task(currentTask)
-        bras[current].add_points(currentTask.nbcase if currentTaskcurrentTaskmoi.nbassemb > 1 else 0)
+        bras[current].add_points(currentTask.nbcase if currentTask.nbassemb > 1 else 0)
         bras[current].add_points(currentTask.nbpoint)
         bras[current].add_steps(calc_dist(bras[current].taches[-2].coordtask[-1], bras[current].taches[-1].coordtask[0]))
 
