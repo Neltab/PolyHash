@@ -1,9 +1,9 @@
 #Utilisé pour appeler les fonctions de pathfinding
 
-from utils.pathfinding.Node import Node
-from utils.pathfinding.Grid import GetNeighbours
-from utils.pathfinding import settings as S
-from utils.group.Arm import Arm
+from .Node import Node
+from .Grid import GetNeighbours
+from .pathfinding import settings as S
+from ..group.Arm import Arm
 import copy
 
 
