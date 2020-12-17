@@ -89,7 +89,6 @@ def RetracePath(startNode, endNode, arm: Arm):
         :param endNode : node de fin
         :param arm : le bras sur lequel on effectue les mouvements
     """
-    #path = []
     pathLetter = [] #contient les lettres de direction
     currentNode: Node = endNode #on part de la fin
     tab = [] #le tableau contenant les cases occupées par un bras, pour l'algo d'Aurelien
@@ -112,8 +111,8 @@ def RetracePath(startNode, endNode, arm: Arm):
     arm.occupiedCell += tab
 
     pathLetter.reverse()
-    #path.reverse()
-    return pathLetter #retourne un tableau de lettres
+    arm.movements += pathLetter  # On ajoute les lettres au tableau de coordonnées du bras.
+    return
 
 
 def GetDirection(n1: Node, n2: Node):
@@ -142,11 +141,7 @@ def CompleteArmTask(arm : Arm):
     for tache in arm.taches: #pour chaque tache
         for coord in tache.coordtask:
             targetPos = coord #position à aller chercher
-            pathLetters = FindPath(startPoint, targetPos, arm)
-
-            if pathLetters:
-                for n in pathLetters: # on additionne les lettres (mouvements) une a une au tableau contenant tous les mouvements du bras
-                    arm.movements.append(n)
+            FindPath(startPoint, targetPos, arm)
 
             startPoint = targetPos # on change le point de départ comme expliqué plus haut
         print(startPoint)
