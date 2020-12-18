@@ -11,9 +11,9 @@
 Le projet consiste à optimiser une chaine de production de smartphone. Cette derniere est modélisée par des bras robotiques, positionnés sur des points de montage et pouvant se déplacer sur les cases d'une grille modélisant l'usine de production. Ces bras doivent effectuer des tâches, représentant l'assemblage de smartphone. Les bras doivent effectuer ses dernieres en un temps limité et ne peuvent pas se chevaucher.
 
 ## Membres du groupe
-Balem Gaetan
-Boissiere Aurelien
-Huchet Anthime
+Balem Gaetan, 
+Boissiere Aurelien, 
+Huchet Anthime, 
 Mahe Lucas
 
 ## Installation
