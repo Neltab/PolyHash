@@ -12,8 +12,11 @@ from utils import CreateFile
 
 if __name__ == "__main__":
 
-    textInput = input("Indiquez le nom du fichier que vous vous utiliser : ")
-    textOutput = input("Indiquez le nom du fichier de sortie : ")
+    # textInput = input("Indiquez le nom du fichier que vous vous utiliser : ")
+    # textOutput = input("Indiquez le nom du fichier de sortie : ")
+
+    textInput = "a_example"
+    textOutput = "Test"
 
     # Input
     input_values = Input_global(textInput)
@@ -38,7 +41,7 @@ if __name__ == "__main__":
     for b in bras:
         createMoves(b)
 
-
+    print(" ")
     # Gestion des conflits et créations des mouvements finaux
     gest_conflits(bras, input_values)
     

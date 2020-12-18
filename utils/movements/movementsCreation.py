@@ -83,6 +83,9 @@ def inTaskMovements(bras: Arm, tache: Tache) -> List[str]:
     # les deux premieres cases de la tache
     moves = pathfinding.FindPath(tache.coordtask[0], tache.coordtask[1], bras)
 
+    if moves == None:
+        moves = []
+    
     # On détermine les déplacements pour le reste des cases à parcourir
     for i in range(1,len(tache.coordtask)-1):
         currentPos = tache.coordtask[i]
@@ -104,7 +107,7 @@ def inTaskMovements(bras: Arm, tache: Tache) -> List[str]:
         else:
             moves += pathfinding.FindPath(currentPos, nextPos, bras)
 
-        return moves
+    return moves
 
 
 def betweenTasksMovements(bras: Arm, t: int, firstCellIdx: int = -1) -> List[str]:
