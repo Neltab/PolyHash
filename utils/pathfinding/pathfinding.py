@@ -2,7 +2,7 @@
 
 from .Node import Node
 from .Grid import GetNeighbours
-from .pathfinding import settings as S
+from . import settings as S
 from ..group.Arm import Arm
 import copy
 

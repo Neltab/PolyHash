@@ -1,5 +1,5 @@
-from polyhash.Pathfinding import settings as S
-from Tache import Tache
+from ..pathfinding import settings as S
+from .Tache import Tache
 
 def Calculdistance(coord: list):
     """Fonction qui calcul la distance entre les points d'assemblages d'une taches.
@@ -42,7 +42,7 @@ def Input_global(nomfichier : str):
     :return dict : dictionnaire contenant toutes les variables importantes du fichier.
     """
 
-    with open(nomfichier + ".txt","r") as fichier:
+    with open("./input_files/" + nomfichier + ".txt","r") as fichier:
         caracglob = Extracint(fichier.readline())
         GRILLE = caracglob[:2]
         BRAS = caracglob[2]

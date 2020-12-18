@@ -1,6 +1,8 @@
 from ..group.Arm import Arm
 from ..pathfinding import settings as S, pathfinding
+from ..input.Tache import Tache
 from typing import List, NewType
+
 Coordinates = List[int]
 
 def moveToFirstTask(bras: Arm):

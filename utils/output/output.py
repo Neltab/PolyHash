@@ -4,7 +4,7 @@ def CreateFile(bras: list, nomFichier: str):
     :param bras: Liste des bras créés par le programme    
     """
 
-    with open(nomFichier + ".out", "w") as fichier:
+    with open("./output_files/" + nomFichier + ".out", "w") as fichier:
         # On écrit le nombre de bras à utiliser
         fichier.write(str(len(bras))+"\n")
         total = 0

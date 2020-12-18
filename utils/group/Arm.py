@@ -10,6 +10,7 @@ class Arm:
         Initialisation
     pm: List[int] = Coordonnées du point de montage du bras\n
     taches: List[Tache] = Liste des taches que le bras devras potentiellement effectuer\n
+    tachesIndices: List[int] = Liste des indices des tâches stockées dans la variable tâches\n
     points: int = Nombre de points maximum que le bras peut produire s'il remplit toutes ses taches\n
     etapes: int = Nombre d'étapes minimum que le bras devra effectuer (sans conflits ni retractation)\n
     movements: List[List[str]] = Mouvements que le bras devras effectuer pour faire toutes ses taches\n
@@ -35,6 +36,7 @@ class Arm:
     def __init__(self):
         self.pm = []
         self.taches = []
+        self.tachesIndices = []
         self.points = 0
         self.etapes = 0
         self.movements = []
@@ -72,12 +74,14 @@ class Arm:
         self.pm = pm
 
 
-    def add_task(self, task: Tache):
+    def add_task(self, task: Tache, indice: int):
         """Ajoute une tache au bras
 
         :param task : Tache a ajouter à la liste des taches
+        :param indice : Indice de la tâche
         """
         self.taches.append(task)
+        self.tachesIndices.append(indice)
 
 
     def add_points(self, points: int):
