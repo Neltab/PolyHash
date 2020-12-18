@@ -1,4 +1,5 @@
 from ..group.Arm import Arm
+from ..pathfinding import settings as S
 
 def get_pos_from_dir(move: str, cell: list):
         if move == "L":
