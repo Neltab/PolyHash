@@ -17,7 +17,11 @@ Huchet Anthime,
 Mahe Lucas
 
 ## Installation
+Pour exécuter le programme, mettre le fichier d'input dans le dossier "input_files". Et lancez le programme en tapant la commande :
 
+#### python solver.py
+
+Le programme vous demandera à ce moment le nom du fichier d'entrée et le nom du fichier de sortie. Si le fichier de sortie n'existe pas il sera créé, et stocké dans le fichier output_files.
 
 
 [score]: https://img.shields.io/badge/score-1400503-%2300adef?style=flat-square "Score"
