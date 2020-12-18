@@ -1,5 +1,5 @@
-from utils.pathfinding.Node import Node
-from utils.pathfinding import settings as S
+from .Node import Node
+from . import settings as S
 import copy
 
 

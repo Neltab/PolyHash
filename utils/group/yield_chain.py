@@ -1,5 +1,5 @@
 from typing import List, NewType
-from .Arm import Arm
+from ..group.Arm import Arm
 from ..input.Tache import Tache
 
 __all__ = ['get_arms']
@@ -35,7 +35,7 @@ def get_arms(taches: List[Tache], pointsMontage: List[Coordinates], nbBras: int)
 
         # Ajout des différentes valeurs définissant le bras
         bras[i].set_pm(pointsMontage[indicePM])
-        bras[i].add_task(currentTask)
+        bras[i].add_task(currentTask, indiceTache)
         bras[i].add_points(currentTask.nbpoint)
         bras[i].add_steps(currentTask.nbcase if currentTask.nbassemb > 1 else 0)
 
@@ -49,8 +49,8 @@ def get_arms(taches: List[Tache], pointsMontage: List[Coordinates], nbBras: int)
         currentTask = taches[maxIndex]
 
         # On ajoute les différentes valeurs liées à la tache trouvée à notre bras
-        bras[current].add_task(currentTask)
-        bras[current].add_points(currentTask.nbcase if currentTaskcurrentTaskmoi.nbassemb > 1 else 0)
+        bras[current].add_task(currentTask, maxIndex)
+        bras[current].add_points(currentTask.nbcase if currentTask.nbassemb > 1 else 0)
         bras[current].add_points(currentTask.nbpoint)
         bras[current].add_steps(calc_dist(bras[current].taches[-2].coordtask[-1], bras[current].taches[-1].coordtask[0]))
 
