@@ -91,7 +91,6 @@ def RetracePath(startNode, endNode, arm: Arm):
     """
     pathLetter = [] #contient les lettres de direction
     currentNode: Node = endNode #on part de la fin
-    tab = [] #le tableau contenant les cases occupées par un bras, pour l'algo d'Aurelien
     i = 0
 
     #Ici on prend les coordonnées des nodes une à une et on modifie la node à cet emplacement en mettant la valeur de walkable sur False
@@ -102,17 +101,13 @@ def RetracePath(startNode, endNode, arm: Arm):
 
         #Occupation des cases
         S.nodeGrid[currentNode.gridX][currentNode.gridY].walkable = False #cette case est désormais un obstacle
-        tab[i] = [currentNode.gridX,currentNode.gridY]
         i+=1
 
         currentNode = currentNode.parent
 
-    tab.reverse()
-    arm.occupiedCell += tab
-
     pathLetter.reverse()
-    arm.movements += pathLetter  # On ajoute les lettres au tableau de coordonnées du bras.
-    return
+
+    return pathLetter
 
 
 def GetDirection(n1: Node, n2: Node):
@@ -141,7 +136,7 @@ def CompleteArmTask(arm : Arm):
     for tache in arm.taches: #pour chaque tache
         for coord in tache.coordtask:
             targetPos = coord #position à aller chercher
-            FindPath(startPoint, targetPos, arm)
+            arm.movements += FindPath(startPoint, targetPos, arm)
 
             startPoint = targetPos # on change le point de départ comme expliqué plus haut
         print(startPoint)
