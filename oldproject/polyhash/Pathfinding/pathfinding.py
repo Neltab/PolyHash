@@ -6,16 +6,18 @@ from polyhash.Pathfinding import settings as S
 from polyhash.polyhutils.groupBy.Arm import Arm
 import copy
 
+
+#Methode principale, on lui donne un point de départ et d'arrivée, ainsi qu'un objet ARM, celui dont on va modifier les coordonnées
 def FindPath(startPos: [], targetPos: [], arm: Arm):
     startNode = Node(True,  startPos[0],  startPos[1])
     targetNode = Node(True, targetPos[0], targetPos[1])
 
-    #exception si on ne doit pas bouger de case
+    #exception si on ne doit pas bouger de case, dans le cas d'une double éxecution de tache en un tour unique.
     if startPos == targetPos:
         return None
 
-    openSet = []
-    closedSet = []
+    openSet = [] #liste des nodes que l'on doit analyser à chaque tour de boucle
+    closedSet = [] #liste des nodes analysées
     openSet.append(startNode)
 
     #On initialise une grille de Nodes, et pour chaque node, on lui assigne les valeurs de gCost et hCost correspondantes
@@ -24,22 +26,27 @@ def FindPath(startPos: [], targetPos: [], arm: Arm):
         for y in range(0, S.columns):
             nodeGrid[x][y].gCost = GetDistance(nodeGrid[x][y], startNode)
             nodeGrid[x][y].hCost = GetDistance(nodeGrid[x][y], targetNode)
-            #print(nodeGrid[x][y].gCost,nodeGrid[x][y].hCost) #print toutes les valeurs de gCost et hCost de la grille
 
-    while len(openSet) > 0 :
-        #print(openSet)
+    while len(openSet) > 0 : #tant qu'on a au moins une node à vérifier
         currentNode: Node = openSet[0]
-        for i in range(1,len(openSet)):
+        for i in range(1,len(openSet)): # dans cette boucle on cherche la node la plus intéressante du point de vue de son cout, et on l'assigne à currentnode.
             if openSet[i].fCost() <= currentNode.fCost():
                 if openSet[i].hCost < currentNode.hCost:
                     currentNode = openSet[i]
 
-        openSet.remove(currentNode)
+        openSet.remove(currentNode) #la node est maintenant vérifiée
         closedSet.append(currentNode)
 
-        if currentNode.gridX == targetNode.gridX and currentNode.gridY == targetNode.gridY: #on a trouvé le chemin YES
+
+
+        ####################################
+        #   CONDITION DE FIN DE FONCTION   #
+        ####################################
+
+        if currentNode.gridX == targetNode.gridX and currentNode.gridY == targetNode.gridY: #on est rendus à la node de fin, on appelle la fonction qui écrit les mouvements
             targetNode.parent = currentNode.parent
             return RetracePath(startNode, targetNode, arm)
+
 
         #GetNeighbours retourne un tableau que l'on parcourt ici
         for neighbour in GetNeighbours(currentNode):
@@ -57,21 +64,22 @@ def FindPath(startPos: [], targetPos: [], arm: Arm):
 
 #retourne à combien de mouvements se trouve une case d'une autre
 #on ne prend pas en compte les diagonales ici car on ne peut bouger que dans 4 directions
-#ici le *10 dépend du cout de chaque mouvement dans l'alorithme A*, dans notre cas 10
+#ici le *10 dépend du cout de chaque mouvement dans l'alorithme A*
 def GetDistance(nodeA: Node, nodeB: Node):
     return 10*(abs(nodeA.gridX-nodeB.gridX) + abs(nodeA.gridY-nodeB.gridY))
 
 
 def RetracePath(startNode, endNode, arm: Arm):
-    path = []
-    pathLetter = []
+    #path = []
+    pathLetter = [] #contient les lettres de direction
     currentNode: Node = endNode #on part de la fin
     tab = [] #le tableau contenant les cases occupées par un bras, pour l'algo d'Aurelien
     i = 0
-    #prendre les coordonnées des nodes une à une et modifier la node à cet emplacement en mettant un set de walkable sur false.
-    #ajouter variable de position utilisée au bras en question
+
+    #Ici on prend les coordonnées des nodes une à une et on modifie la node à cet emplacement en mettant la valeur de walkable sur False
+    #On ajoute ensuite les variable de position utilisée au bras en question
     while not currentNode == startNode :
-        path.append(currentNode)
+        #path.append(currentNode)
         pathLetter.append(GetDirection(currentNode.parent, currentNode))
 
         #Occupation des cases
@@ -82,11 +90,10 @@ def RetracePath(startNode, endNode, arm: Arm):
         currentNode = currentNode.parent
 
     tab.reverse()
-    for j in tab:
-        arm.occupiedCell.append(j)
+    arm.occupiedCell += tab
 
     pathLetter.reverse()
-    path.reverse()
+    #path.reverse()
     return pathLetter #retourne un tableau de lettres
 
 
